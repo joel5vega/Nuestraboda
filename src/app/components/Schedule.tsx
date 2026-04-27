@@ -1,12 +1,15 @@
 const scheduleItems = [
-  { time: "3:45 PM", event: "Llegada de los invitados", desc: "Recibimiento en la entrada de la Parroquia", icon: "✦" },
-  { time: "4:00 PM", event: "Ceremonia religiosa", desc: "Unión sagrada ante Dios y sus seres queridos", icon: "♡" },
-  { time: "5:30 PM", event: "Sesión de fotos", desc: "Captura de los momentos más especiales", icon: "◈" },
-  { time: "6:30 PM", event: "Cóctel de bienvenida", desc: "Aperitivos y música en vivo en la hacienda", icon: "◇" },
-  { time: "8:00 PM", event: "Cena de gala", desc: "Banquete con menú de tres tiempos", icon: "❦" },
-  { time: "9:30 PM", event: "Vals y primer baile", desc: "El momento más esperado de la noche", icon: "✿" },
-  { time: "10:00 PM", event: "Fiesta y baile", desc: "¡A bailar toda la noche con la mejor música!", icon: "✦" },
-  { time: "2:00 AM", event: "Brunch de madrugada", desc: "Snacks y café para continuar la celebración", icon: "◉" },
+  { time: "12:00 PM", event: "Llegada de los invitados", desc: "Recibimiento en el jardín exterior", icon: "✦" },
+  { time: "1:00 PM", event: "Ceremonia religiosa", desc: "Unión sagrada ante Dios y sus seres queridos", icon: "♡" },
+  { time: "2:00 PM", event: "Sesión de fotos", desc: "Captura de los momentos más especiales", icon: "◈" },
+  { time: "3:30 PM", event: "Palabras de agradecimiento", desc: "Gracias por acompañarnos en este día tan especial", icon: "◇" },
+  { time: "4:00 PM", event: "Regalos", desc: "Gracias por sus regalos y presentes", icon: "❦" },
+  { time: "4:30 PM", event: "Presentación de ministerios", desc: "Oportunidades de servicio", icon: "◉" },
+  { time: "5:00 PM", event: "Palabra", desc: "Compartiendo la palabra de Dios", icon: "✦" },
+  { time: "5:30 PM", event: "Vals y primer baile", desc: "El momento más esperado ", icon: "✿" },
+  { time: "6:00 PM", event: "Tiempo de danza", desc: "A gozarnos delante del Señor", icon: "✦" },
+  { time: "7:00 PM", event: "Cena", desc: "Disfrutamos un delicioso banquete", icon: "✦" },
+{ time: "8:00 PM", event: "Torta", desc: "Compartimos una rica torta", icon: "✦" },
 ];
 
 export function Schedule() {

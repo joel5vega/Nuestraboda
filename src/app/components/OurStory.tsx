@@ -1,31 +1,37 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-
-const coupleImage = "https://images.unsplash.com/photo-1776458027239-161226d01213?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY291cGxlJTIwcG9ydHJhaXQlMjBmb3Jlc3R8ZW58MXx8fHwxNzc3MDQ0MTExfDA&ixlib=rb-4.1.0&q=80&w=1080";
-
+import coupleImage from "../../assets/pedida.jpg";
+// const coupleImage = "https://images.unsplash.com/photo-1776458027239-161226d01213?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY291cGxlJTIwcG9ydHJhaXQlMjBmb3Jlc3R8ZW58MXx8fHwxNzc3MDQ0MTExfDA&ixlib=rb-4.1.0&q=80&w=1080";
+// const coupleImage = 
 const milestones = [
   {
-    year: "2018",
-    title: "El primer encuentro",
-    desc: "Nos conocimos en una tarde de otoño en la plaza central. Una mirada fue suficiente para saber que algo especial estaba comenzando.",
+    year: "2017",
+    title: "El Comienzo de la Aventura",
+    desc: "Nuestros caminos se cruzaron en una célula universitaria, donde dos almas opuestas aprendieron a valorarse profundamente.",
     icon: "✦",
   },
   {
-    year: "2020",
-    title: "La primera aventura",
-    desc: "Nuestro primer viaje juntos a las montañas del norte confirmó lo que ambos ya sabíamos en el corazón.",
-    icon: "♡",
+    year: "2019",
+    title: "Un Propósito Compartido",
+    desc: "Servir a otros encendió una chispa y reveló un propósito compartido. Aunque tomamos rumbos distintos, nuestro vínculo ya era inevitable.",
+    icon: "🔥",
   },
   {
-    year: "2023",
-    title: "La propuesta",
-    desc: "Bajo el cielo estrellado de Guanajuato, Joel se arrodilló y Betania dijo el más hermoso \"sí\" de su vida.",
-    icon: "◈",
+    year: "2025",
+    title: "Reencuentro en Perú",
+    desc: "Las tierras peruanas y un retiro misionero fueron el escenario de nuestro gran reencuentro, uniéndonos nuevamente en el gozo del servicio.",
+    icon: "🗺️",
   },
-  {
+   {
     year: "2026",
-    title: "Para siempre",
-    desc: "Hoy celebramos el comienzo de nuestra historia más grande, rodeados de quienes más amamos.",
-    icon: "❦",
+    title: "La Noche del Gran Sí",
+    desc: "Bajo el manto de una noche de lluvia y cobijados por nuestros amigos, Betania pronunció el  \"sí\" que cambiaría la historia de Joel.",
+    icon: "💍",
+  },
+  {
+    year: "Agosto 1",
+    title: "Nuestro Pacto en Cristo",
+    desc: "Hoy, frente a ustedes, sellamos nuestro pacto y unimos nuestra historia para siempre en Cristo.",
+    icon: "✝️",
   },
 ];
 
@@ -80,7 +86,7 @@ export function OurStory() {
                 fontSize: "1.1rem",
                 textShadow: "0 1px 4px rgba(0,0,0,0.5)"
               }}>
-                "El amor verdadero no tiene un final feliz,<br />porque el amor verdadero nunca termina."
+                "Siguiendo la verdad en amor <br />crezcamos en Cristo.<br />Efesios 4:15"
               </p>
             </div>
           </div>

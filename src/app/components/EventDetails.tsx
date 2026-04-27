@@ -57,14 +57,13 @@ export function EventDetails() {
             <div className="h-px w-16" style={{ background: "linear-gradient(to left, transparent, #8FAFC2)" }} />
           </div>
         </div>
-
+ {/* Ceremony Card */}
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Ceremony Card */}
+         
           <div className="relative rounded-sm overflow-hidden" style={{
             background: "linear-gradient(145deg, #2C3D4F, #3A5068)",
             boxShadow: "0 8px 32px rgba(44,61,79,0.3)"
           }}>
-            {/* Wood grain */}
             <div className="absolute inset-0 opacity-5" style={{
               backgroundImage: `repeating-linear-gradient(
                 87deg,
@@ -74,7 +73,6 @@ export function EventDetails() {
                 rgba(255,255,255,0.15) 4px
               )`
             }} />
-            {/* Border */}
             <div className="absolute inset-3 border opacity-20 pointer-events-none" style={{ borderColor: "#8FAFC2" }} />
 
             <div className="relative p-10">
@@ -90,17 +88,17 @@ export function EventDetails() {
                 fontWeight: 400,
                 marginBottom: "16px"
               }}>
-                Parroquia de San Miguel
+                Jiwasa
               </h3>
 
               <div className="space-y-3 mb-8">
                 <div className="flex items-center gap-3">
                   <ClockIcon />
-                  <span style={{ color: "#C8D9E6", fontFamily: "'Crimson Text', serif", fontSize: "1.05rem" }}>4:00 PM — Sábado, 14 de Junio 2026</span>
+                  <span style={{ color: "#C8D9E6", fontFamily: "'Crimson Text', serif", fontSize: "1.05rem" }}>12:00 PM — Sábado, 1 de agosto</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <MapPinIcon />
-                  <span style={{ color: "#C8D9E6", fontFamily: "'Crimson Text', serif", fontSize: "1.05rem" }}>Av. Constitución 450, Centro, Monterrey</span>
+                  <span style={{ color: "#C8D9E6", fontFamily: "'Crimson Text', serif", fontSize: "1.05rem" }}>Carretera El Alto - Mallasilla, Achocalla, La Paz</span>
                 </div>
               </div>
 
@@ -109,7 +107,7 @@ export function EventDetails() {
               </p>
 
               <a
-                href="https://maps.google.com"
+                href=" https://maps.app.goo.gl/1fCM2CS4UvyX2B4y8?g_st=iw"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 mt-6 px-6 py-2.5 rounded-sm transition-all duration-300 hover:opacity-80"
@@ -130,7 +128,7 @@ export function EventDetails() {
           </div>
 
           {/* Reception Card */}
-          <div className="relative rounded-sm overflow-hidden" style={{
+          {/* <div className="relative rounded-sm overflow-hidden" style={{
             background: "linear-gradient(145deg, #2C3D4F, #3A5068)",
             boxShadow: "0 8px 32px rgba(44,61,79,0.3)"
           }}>
@@ -145,7 +143,6 @@ export function EventDetails() {
             }} />
             <div className="absolute inset-3 border opacity-20 pointer-events-none" style={{ borderColor: "#8FAFC2" }} />
 
-            {/* Venue image */}
             <div className="relative h-48 overflow-hidden">
               <ImageWithFallback
                 src={venueImage}
@@ -205,7 +202,7 @@ export function EventDetails() {
                 Ver en el mapa
               </a>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Dress code */}
@@ -216,7 +213,7 @@ export function EventDetails() {
           <p className="tracking-[0.35em] uppercase text-xs mb-2" style={{ color: "#4A7FA5", fontFamily: "'Lato', sans-serif" }}>Código de Vestimenta</p>
           <p style={{ fontFamily: "'Playfair Display', serif", color: "#2C3D4F", fontSize: "1.5rem", fontWeight: 400 }}>Formal Elegante</p>
           <p style={{ fontFamily: "'Crimson Text', serif", color: "#6B8FA3", fontSize: "1rem", marginTop: "8px" }}>
-            Paleta sugerida: tonos azul acero, crema, gris y café rústico
+            Paleta sugerida: tonos azul acero, crema, gris y café rústico?
           </p>
         </div>
       </div>

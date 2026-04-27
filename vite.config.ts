@@ -24,6 +24,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: '/Nuestraboda/',
   resolve: {
     alias: {
       // Alias @ to the src directory

@@ -101,7 +101,7 @@ export function CountdownTimer() {
         {/* Decorative bottom */}
         <div className="mt-14 text-center">
           <p style={{ fontFamily: "'Crimson Text', serif", fontStyle: "italic", color: "#6B8FA3", fontSize: "1.15rem" }}>
-            "Dos almas que se encontraron para amarse por siempre"
+            "Dios todo lo hizo hermoso en su tiempo..." - Eclesiastés 3:11
           </p>
         </div>
       </div>

@@ -58,7 +58,7 @@ export function HeroSection() {
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
         {/* Top label */}
         <p className="tracking-[0.4em] uppercase mb-6 text-xs" style={{ color: "#8FAFC2", fontFamily: "'Lato', sans-serif" }}>
-          ✦ Together Forever ✦
+          ✦ Juntos por siempre ✦
         </p>
 
         {/* Names */}
@@ -104,7 +104,7 @@ export function HeroSection() {
             color: "#C8D9E6",
             letterSpacing: "0.15em",
           }}>
-            SÁBADO · 14 DE JUNIO, 2026
+            SÁBADO · 1 DE AGOSTO, 2026
           </p>
         </div>
 
@@ -116,12 +116,12 @@ export function HeroSection() {
           letterSpacing: "0.2em",
           textTransform: "uppercase"
         }}>
-          Hacienda El Roble · Monterrey, México
+          JIWASA · ACHOCHALLA
         </p>
 
         {/* Scroll indicator */}
         <div className="mt-16 flex flex-col items-center gap-2 animate-bounce">
-          <p style={{ color: "#8FAFC2", fontFamily: "'Lato', sans-serif", fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase" }}>Scroll</p>
+          <p style={{ color: "#8FAFC2", fontFamily: "'Lato', sans-serif", fontSize: "0.7rem", letterSpacing: "0.3em", textTransform: "uppercase" }}>Desliza</p>
           <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
             <rect x="1" y="1" width="14" height="22" rx="7" stroke="#8FAFC2" strokeWidth="1.5" opacity="0.6"/>
             <circle cx="8" cy="8" r="2" fill="#8FAFC2" opacity="0.8">
