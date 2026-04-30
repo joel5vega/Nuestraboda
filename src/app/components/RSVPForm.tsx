@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type FormData = {
   name: string;
-  email: string;
+  phone: string;
   guests: string;
   attendance: string;
   dietary: string;
@@ -12,7 +12,7 @@ type FormData = {
 export function RSVPForm() {
   const [form, setForm] = useState<FormData>({
     name: "",
-    email: "",
+    phone: "",
     guests: "1",
     attendance: "",
     dietary: "",
@@ -62,9 +62,9 @@ export function RSVPForm() {
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="tracking-[0.4em] uppercase mb-3 text-xs" style={{ color: "#8FAFC2", fontFamily: "'Lato', sans-serif" }}>
+          {/* <p className="tracking-[0.4em] uppercase mb-3 text-xs" style={{ color: "#8FAFC2", fontFamily: "'Lato', sans-serif" }}>
             ✦ Confirmación ✦
-          </p>
+          </p> */}
           <h2 style={{
             fontFamily: "'Playfair Display', serif",
             color: "#F4EDE4",
@@ -80,7 +80,7 @@ export function RSVPForm() {
             <div className="h-px w-16" style={{ background: "linear-gradient(to left, transparent, #4A7FA5)" }} />
           </div>
           <p className="mt-6" style={{ fontFamily: "'Crimson Text', serif", color: "#8FAFC2", fontSize: "1.05rem", fontStyle: "italic" }}>
-            Por favor confirma tu asistencia antes del <strong style={{ color: "#C8D9E6" }}>15 de Julio, 2026</strong>
+            Por favor confirma  antes del <strong style={{ color: "#C8D9E6" }}>15 de Julio, 2026</strong>
           </p>
         </div>
 
@@ -132,14 +132,14 @@ export function RSVPForm() {
                   />
                 </div>
                 <div>
-                  <label style={labelStyle}>Correo electrónico</label>
+                  <label style={labelStyle}>Teléfono</label>
                   <input
-                    type="email"
-                    name="email"
-                    value={form.email}
+                    type="phone"
+                    name="phone"
+                    value={form.phone}
                     onChange={handleChange}
                     required
-                    placeholder="tu@correo.com"
+                    placeholder="tu celular"
                     style={{ ...inputStyle, caretColor: "#8FAFC2" }}
                     onFocus={e => e.target.style.borderColor = "#4A7FA5"}
                     onBlur={e => e.target.style.borderColor = "rgba(74,127,165,0.25)"}
@@ -163,35 +163,22 @@ export function RSVPForm() {
                   </select>
                 </div>
                 <div>
-                  <label style={labelStyle}>Número de acompañantes</label>
+                  <label style={labelStyle}>¿Vendrás acompañado?</label>
                   <select
                     name="guests"
                     value={form.guests}
                     onChange={handleChange}
                     style={{ ...inputStyle, cursor: "pointer" }}
                   >
-                    {[1, 2, 3, 4, 5].map(n => (
+                    {["sí","no"].map(n => (
                       <option key={n} value={n} style={{ background: "#2C3D4F" }}>
-                        {n} {n === 1 ? "persona" : "personas"}
+                        {n} 
                       </option>
                     ))}
                   </select>
                 </div>
               </div>
 
-              <div>
-                <label style={labelStyle}>Restricciones alimentarias</label>
-                <input
-                  type="text"
-                  name="dietary"
-                  value={form.dietary}
-                  onChange={handleChange}
-                  placeholder="Vegetariano, alergia al gluten, etc. (opcional)"
-                  style={{ ...inputStyle, caretColor: "#8FAFC2" }}
-                  onFocus={e => e.target.style.borderColor = "#4A7FA5"}
-                  onBlur={e => e.target.style.borderColor = "rgba(74,127,165,0.25)"}
-                />
-              </div>
 
               <div>
                 <label style={labelStyle}>Mensaje para los novios</label>
