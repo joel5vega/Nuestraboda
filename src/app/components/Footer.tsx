@@ -23,7 +23,7 @@ export function Footer() {
           </h2>
 
           <p className="mt-4 mb-8" style={{ fontFamily: "'Crimson Text', serif", color: "#8FAFC2", fontSize: "1rem", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-            14 · 06 · 2026
+            01 · 08 · 2026
           </p>
 
           <div className="flex items-center justify-center gap-3 mb-10">
@@ -33,9 +33,9 @@ export function Footer() {
           </div>
 
           <p style={{ fontFamily: "'Crimson Text', serif", fontStyle: "italic", color: "#6B8FA3", fontSize: "1.15rem", lineHeight: 1.8, maxWidth: "500px", margin: "0 auto" }}>
-            "El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección."
+            "Amados, amémonos unos a otros; porque el amor es de Dios."
             <br/>
-            <span className="text-sm" style={{ letterSpacing: "0.1em" }}>— Antoine de Saint-Exupéry</span>
+            <span className="text-sm" style={{ letterSpacing: "0.1em" }}>— 1 Juan 4:7</span>
           </p>
         </div>
       </div>
@@ -56,26 +56,11 @@ export function Footer() {
             <div className="text-center">
               <p className="text-xs tracking-[0.3em] uppercase mb-2" style={{ color: "#4A7FA5", fontFamily: "'Lato', sans-serif" }}>Contacto</p>
               <a href="mailto:boda@joelybetania.com" style={{ color: "#8FAFC2", fontFamily: "'Crimson Text', serif", fontSize: "1rem", textDecoration: "none" }}>
-                boda@joelybetania.com
+                77733987
               </a>
             </div>
 
-            <div className="text-center md:text-right">
-              <p className="text-xs tracking-[0.3em] uppercase mb-2" style={{ color: "#4A7FA5", fontFamily: "'Lato', sans-serif" }}>Comparte</p>
-              <div className="flex items-center gap-4 justify-center">
-                {["Instagram", "Facebook", "WhatsApp"].map((social) => (
-                  <button
-                    key={social}
-                    className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:opacity-80"
-                    style={{ border: "1px solid rgba(74,127,165,0.3)", background: "rgba(74,127,165,0.08)" }}
-                  >
-                    <span style={{ color: "#8FAFC2", fontSize: "0.65rem", fontFamily: "'Lato', sans-serif", letterSpacing: "0.05em" }}>
-                      {social[0]}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
+           
           </div>
         </div>
       </div>
