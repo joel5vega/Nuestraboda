@@ -1,34 +1,39 @@
 import { useState } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-
+import hands from "../../assets/hands.jpg";
+import hugBlack from "../../assets/hugBlack.jpg";
+import lookAbove from "../../assets/lookAbove.jpg";
+import loveAndServe from "../../assets/loveAndServe.jpg";
+import sajama from "../../assets/sajama.jpg";
+import jiwasa from "../../assets/jiwasa.png";
 const photos = [
   {
-    src: "https://images.unsplash.com/photo-1677677403344-029c7fcd7300?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxydXN0aWMlMjB3ZWRkaW5nJTIwY2VyZW1vbnklMjBvdXRkb29yfGVufDF8fHx8MTc3NzA0NDExMHww&ixlib=rb-4.1.0&q=80&w=1080",
+    src: hands,
     alt: "Ceremonia al aire libre",
     size: "tall",
   },
   {
-    src: "https://images.unsplash.com/photo-1690332547953-b98f4f4844e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwcmluZ3MlMjB3b29kJTIwdGFibGUlMjBydXN0aWN8ZW58MXx8fHwxNzc3MDQ0MTE3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    src: lookAbove,
     alt: "Los anillos",
     size: "normal",
   },
   {
-    src: "https://images.unsplash.com/photo-1517836833107-0ce99b4a1dc4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwZmxvd2VycyUyMGJvdXF1ZXQlMjBibHVlfGVufDF8fHx8MTc3NzA0NDExNHww&ixlib=rb-4.1.0&q=80&w=1080",
+    src: jiwasa,
     alt: "El ramo",
     size: "normal",
   },
   {
-    src: "https://images.unsplash.com/photo-1776458027239-161226d01213?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY291cGxlJTIwcG9ydHJhaXQlMjBmb3Jlc3R8ZW58MXx8fHwxNzc3MDQ0MTExfDA&ixlib=rb-4.1.0&q=80&w=1080",
+    src: loveAndServe,
     alt: "La pareja",
     size: "wide",
   },
   {
-    src: "https://images.unsplash.com/photo-1768777270882-9f74939fee50?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwcmVjZXB0aW9uJTIwdGFibGUlMjBkZWNvciUyMGVsZWdhbnR8ZW58MXx8fHwxNzc3MDQ0MTE4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    src: sajama,
     alt: "Decoración de mesa",
     size: "normal",
   },
   {
-    src: "https://images.unsplash.com/photo-1776383867854-36b71f5cda28?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyb21hbnRpYyUyMGNvdXBsZSUyMGRhbmNpbmclMjB3ZWRkaW5nfGVufDF8fHx8MTc3NzA0NDExOHww&ixlib=rb-4.1.0&q=80&w=1080",
+    src: hugBlack,
     alt: "El baile",
     size: "tall",
   },

@@ -1,36 +1,34 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import coupleImage from "../../assets/pedida.jpg";
-// const coupleImage = "https://images.unsplash.com/photo-1776458027239-161226d01213?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWRkaW5nJTIwY291cGxlJTIwcG9ydHJhaXQlMjBmb3Jlc3R8ZW58MXx8fHwxNzc3MDQ0MTExfDA&ixlib=rb-4.1.0&q=80&w=1080";
-// const coupleImage = 
 const milestones = [
   {
     year: "2017",
     title: "El Comienzo de la Aventura",
-    desc: "Nuestros caminos se cruzaron en una célula universitaria, donde dos almas opuestas aprendieron a valorarse profundamente.",
+    desc: "Dos almas opuestas se cruzaron en una célula universitaria y aprendieron a valorarse profundamente.",
     icon: "✦",
   },
   {
     year: "2019",
     title: "Un Propósito Compartido",
-    desc: "Servir a otros encendió una chispa y reveló un propósito compartido. Aunque tomamos rumbos distintos, nuestro vínculo ya era inevitable.",
+    desc: "Servir juntos encendió una chispa y reveló un propósito compartido, haciendo nuestro vínculo inevitable.",
     icon: "🔥",
   },
   {
     year: "2025",
     title: "Reencuentro en Perú",
-    desc: "Las tierras peruanas y un retiro misionero fueron el escenario de nuestro gran reencuentro, uniéndonos nuevamente en el gozo del servicio.",
+    desc: "Un retiro misionero  fue testigo de un reencuentro que el cielo ya tenía escrito.",
     icon: "🗺️",
   },
    {
     year: "2026",
     title: "La Noche del Gran Sí",
-    desc: "Bajo el manto de una noche de lluvia y cobijados por nuestros amigos, Betania pronunció el  \"sí\" que cambiaría la historia de Joel.",
+    desc: "Bajo la lluvia, un «sí» que reescribió nuestro destino.",
     icon: "💍",
   },
   {
     year: "Agosto 1",
     title: "Nuestro Pacto en Cristo",
-    desc: "Hoy, frente a ustedes, sellamos nuestro pacto y unimos nuestra historia para siempre en Cristo.",
+    desc: "Hoy, ante Cristo y ante ustedes, nuestra historia se vuelve una.",
     icon: "✝️",
   },
 ];

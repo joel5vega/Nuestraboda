@@ -71,7 +71,7 @@ export function Schedule() {
                       }}>
                         {item.event}
                       </p>
-                      <p style={{
+                      {/* <p style={{
                         fontFamily: "'Crimson Text', serif",
                         color: "#8FAFC2",
                         fontSize: "0.9rem",
@@ -79,7 +79,7 @@ export function Schedule() {
                         fontStyle: "italic"
                       }}>
                         {item.desc}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
 

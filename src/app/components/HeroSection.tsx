@@ -1,6 +1,5 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-
-const heroImage = "https://images.unsplash.com/photo-1677677403344-029c7fcd7300?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxydXN0aWMlMjB3ZWRkaW5nJTIwY2VyZW1vbnklMjBvdXRkb29yfGVufDF8fHx8MTc3NzA0NDExMHww&ixlib=rb-4.1.0&q=80&w=1080";
+import heroImage from "../../assets/jiwasa.png";
 
 const FloralDivider = () => (
   <div className="flex items-center justify-center gap-3 my-4">

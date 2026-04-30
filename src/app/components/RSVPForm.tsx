@@ -80,7 +80,7 @@ export function RSVPForm() {
             <div className="h-px w-16" style={{ background: "linear-gradient(to left, transparent, #4A7FA5)" }} />
           </div>
           <p className="mt-6" style={{ fontFamily: "'Crimson Text', serif", color: "#8FAFC2", fontSize: "1.05rem", fontStyle: "italic" }}>
-            Por favor confirma tu asistencia antes del <strong style={{ color: "#C8D9E6" }}>14 de Mayo, 2026</strong>
+            Por favor confirma tu asistencia antes del <strong style={{ color: "#C8D9E6" }}>15 de Julio, 2026</strong>
           </p>
         </div>
 
