@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import coupleImage from "../../assets/pedida.jpg";
-import { theme } from "../../styles/theme";
+import theme from "../../styles/theme";
 
 const milestones = [
   { year: "2017",     title: "El Comienzo de la Aventura", desc: "Dos almas opuestas se encontraron… y todo cambió.",                               icon: "✦"  },

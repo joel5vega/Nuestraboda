@@ -6,7 +6,7 @@ import lookAbove  from "../../assets/lookAbove.jpg";
 import loveAndServe from "../../assets/loveAndServe.jpg";
 import sajama     from "../../assets/sajama.jpg";
 import jiwasa     from "../../assets/jiwasa.png";
-import { theme } from "../../styles/theme";
+import  theme  from "../../styles/theme";
 
 const photos = [
   { src: hands,        alt: "Ceremonia al aire libre", size: "tall"   },

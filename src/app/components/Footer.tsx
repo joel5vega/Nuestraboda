@@ -1,76 +1,108 @@
+import { colors, fonts, gradients } from "../../styles/theme";
+
 const HeartIcon = () => (
-  <svg width="18" height="16" viewBox="0 0 18 16" fill="none">
-    <path d="M9 15C9 15 1 9.5 1 4.5C1 2.57 2.57 1 4.5 1C6 1 7.5 2 9 3.5C10.5 2 12 1 13.5 1C15.43 1 17 2.57 17 4.5C17 9.5 9 15 9 15Z" fill="#4A7FA5" opacity="0.6"/>
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M7 12S1 8 1 4.5A3 3 0 0 1 7 3.5 3 3 0 0 1 13 4.5C13 8 7 12 7 12Z"
+      fill={colors.accentTeal} opacity="0.8"/>
   </svg>
 );
 
+const CrossIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M9 2V16M4 7H14" stroke={colors.accentBlue} strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+// ─── Estilos ─────────────────────────────────────────────────────────────────
+
+const S = {
+  section:   { background: `linear-gradient(to bottom, ${colors.bgCard}, #111D28)`, padding: "5rem 1.5rem 3rem" },
+  names:     { fontFamily: fonts.display, color: colors.textPrimary, fontSize: "clamp(2rem, 7vw, 4rem)", fontWeight: 400, letterSpacing: "0.02em" },
+  ampersand: { fontFamily: fonts.display, color: colors.accentTeal, fontSize: "clamp(1.4rem, 4vw, 2.5rem)", fontStyle: "italic" as const, margin: "0 0.75rem" },
+  date:      { fontFamily: fonts.sans, color: colors.accentBlue, fontSize: "0.8rem", letterSpacing: "0.4em", textTransform: "uppercase" as const, marginTop: "0.75rem" },
+  verse:     { fontFamily: fonts.serif, fontStyle: "italic" as const, color: colors.accentBlue, fontSize: "clamp(0.9rem, 2vw, 1.1rem)", lineHeight: 1.8, maxWidth: "480px", margin: "0 auto", opacity: 0.85 },
+  colTitle:  { fontFamily: fonts.sans, fontSize: "0.65rem", letterSpacing: "0.35em", textTransform: "uppercase" as const, color: colors.accentTeal, marginBottom: "0.75rem" },
+  hashtag:   { fontFamily: fonts.display, color: colors.textPrimary, fontSize: "clamp(1.1rem, 3vw, 1.5rem)", fontWeight: 400, fontStyle: "italic" as const },
+  phone:     { fontFamily: fonts.sans, color: colors.textPrimary, fontSize: "1rem", textDecoration: "none", letterSpacing: "0.05em", transition: "color 0.2s ease" },
+  divider:   { height: "1px", background: `linear-gradient(to right, transparent, ${colors.border}, transparent)`, margin: "3rem 0 2rem", opacity: 0.4 },
+  bottom:    { fontFamily: fonts.sans, fontSize: "0.72rem", color: colors.accentBlue, letterSpacing: "0.2em", opacity: 0.6 },
+} as const;
+
+// ─── Componente ──────────────────────────────────────────────────────────────
+
 export function Footer() {
   return (
-    <footer style={{ background: "#2C3D4F", borderTop: "1px solid rgba(74,127,165,0.2)" }}>
-      {/* Top section */}
-      <div className="py-16 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Names */}
-          <h2 style={{
-            fontFamily: "'Playfair Display', serif",
-            color: "#F4EDE4",
-            fontSize: "clamp(2rem, 6vw, 3.5rem)",
-            fontWeight: 400,
-            fontStyle: "italic",
-            lineHeight: 1.1
-          }}>
-            Joel <span style={{ color: "#8FAFC2" }}>&</span> Betania
-          </h2>
+    <>
+      <style>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(16px); }
+          to   { opacity: 1; transform: translateY(0);    }
+        }
+        .footer-phone:hover { color: ${colors.accentTeal} !important; }
+      `}</style>
 
-          <p className="mt-4 mb-8" style={{ fontFamily: "'Crimson Text', serif", color: "#8FAFC2", fontSize: "1rem", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-            01 · 08 · 2026
-          </p>
+      <footer style={S.section}>
+        <div style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" }}>
 
-          <div className="flex items-center justify-center gap-3 mb-10">
-            <div className="h-px w-20" style={{ background: "linear-gradient(to right, transparent, #4A7FA5)" }} />
-            <HeartIcon />
-            <div className="h-px w-20" style={{ background: "linear-gradient(to left, transparent, #4A7FA5)" }} />
+          {/* Cruz */}
+          <div style={{ marginBottom: "1.5rem", opacity: 0.6 }}>
+            <CrossIcon />
           </div>
 
-          <p style={{ fontFamily: "'Crimson Text', serif", fontStyle: "italic", color: "#6B8FA3", fontSize: "1.15rem", lineHeight: 1.8, maxWidth: "500px", margin: "0 auto" }}>
-            "Amados, amémonos unos a otros; porque el amor es de Dios."
-            <br/>
-            <span className="text-sm" style={{ letterSpacing: "0.1em" }}>— 1 Juan 4:7</span>
+          {/* Nombres */}
+          <div style={{ marginBottom: "0.5rem" }}>
+            <span style={S.names}>Joel</span>
+            <span style={S.ampersand}>&amp;</span>
+            <span style={S.names}>Betania</span>
+          </div>
+
+          <p style={S.date}>01 · 08 · 2026</p>
+
+          {/* Línea decorativa */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem", margin: "2rem 0" }}>
+            <div style={{ height: "1px", width: "60px", background: gradients.lineLeft }} />
+            <HeartIcon />
+            <div style={{ height: "1px", width: "60px", background: gradients.lineRight }} />
+          </div>
+
+          {/* Versículo */}
+          <p style={S.verse}>
+            "Amados, amémonos unos a otros;<br />
+            porque el amor es de Dios."<br />
+            <span style={{ fontSize: "0.85em", opacity: 0.7 }}>— 1 Juan 4:7</span>
           </p>
-        </div>
-      </div>
 
-      {/* Hashtag & Social */}
-      <div className="py-8 px-6" style={{ borderTop: "1px solid rgba(74,127,165,0.1)" }}>
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-center md:text-left">
-              <p className="text-xs tracking-[0.3em] uppercase mb-1" style={{ color: "#4A7FA5", fontFamily: "'Lato', sans-serif" }}>
-                Hashtag oficial
-              </p>
-              <p style={{ fontFamily: "'Playfair Display', serif", color: "#C8D9E6", fontSize: "1.3rem", fontStyle: "italic" }}>
-                #JoelyBetania2026
-              </p>
+          {/* Columnas: hashtag + contacto */}
+          <div style={{
+            display:             "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap:                 "2rem",
+            margin:              "3rem 0 0",
+            paddingTop:          "2.5rem",
+            borderTop:           `1px solid rgba(74,127,165,0.15)`,
+          }}>
+            <div>
+              <p style={S.colTitle}>Hashtag oficial</p>
+              <p style={S.hashtag}>#JoelyBetania2026</p>
             </div>
-
-            <div className="text-center">
-              <p className="text-xs tracking-[0.3em] uppercase mb-2" style={{ color: "#4A7FA5", fontFamily: "'Lato', sans-serif" }}>Contacto</p>
-              <a href="mailto:boda@joelybetania.com" style={{ color: "#8FAFC2", fontFamily: "'Crimson Text', serif", fontSize: "1rem", textDecoration: "none" }}>
-                77733987
+            <div>
+              <p style={S.colTitle}>Contacto</p>
+              <a href="tel:+59177733987" className="footer-phone" style={S.phone}>
+                 777 33987
               </a>
             </div>
-
-           
           </div>
-        </div>
-      </div>
 
-      {/* Bottom */}
-      <div className="py-4 px-6 text-center" style={{ borderTop: "1px solid rgba(74,127,165,0.08)" }}>
-        <p className="text-xs" style={{ color: "#4A7FA5", fontFamily: "'Lato', sans-serif", letterSpacing: "0.1em", opacity: 0.6 }}>
-          Hecho con amor para el día más especial ✦ 2026
-        </p>
-      </div>
-    </footer>
+          {/* Línea divisoria */}
+          <div style={S.divider} />
+
+          {/* Bottom */}
+          <p style={S.bottom}>
+            Hecho con amor por Joel · 2026
+          </p>
+
+        </div>
+      </footer>
+    </>
   );
 }

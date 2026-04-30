@@ -1,34 +1,42 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { colors, fonts } from "../../styles/theme";
 
-// Romantic chord progression using Web Audio API
-// Chords: Cmaj7 - Am7 - Fmaj7 - G7 (I - vi - IV - V in C major)
 const CHORDS = [
   [261.63, 329.63, 392.00, 493.88], // Cmaj7
   [220.00, 261.63, 329.63, 440.00], // Am7
   [174.61, 220.00, 261.63, 349.23], // Fmaj7
   [196.00, 246.94, 293.66, 392.00], // G7
 ];
-
-const CHORD_DURATION = 3.5; // seconds per chord
-const FADE_TIME = 0.8;
+const CHORD_DURATION = 3.5;
+const FADE_TIME      = 0.8;
 
 type OscGroup = { oscs: OscillatorNode[]; gain: GainNode };
 
+// ─── Estilos ─────────────────────────────────────────────────────────────────
+
+const S = {
+  wrapper:      { position: "fixed" as const, bottom: "1.5rem", right: "1.5rem", zIndex: 1000, display: "flex", flexDirection: "column" as const, alignItems: "flex-end", gap: "0.5rem" },
+  tooltip:      { background: "rgba(28,42,58,0.92)", backdropFilter: "blur(8px)", border: `1px solid ${colors.border}`, borderRadius: "4px", padding: "0.4rem 0.9rem", color: colors.accentBlue, fontFamily: fonts.sans, fontSize: "0.7rem", letterSpacing: "0.1em", whiteSpace: "nowrap" as const, pointerEvents: "none" as const },
+  spotifyLink:  { display: "flex", alignItems: "center", gap: "0.4rem", textDecoration: "none", background: "rgba(28,42,58,0.85)", backdropFilter: "blur(8px)", border: `1px solid rgba(74,127,165,0.25)`, borderRadius: "4px", padding: "0.35rem 0.8rem", color: colors.accentBlue, fontFamily: fonts.sans, fontSize: "0.65rem", letterSpacing: "0.15em", transition: "color 0.2s ease, border-color 0.2s ease" },
+  label:        { fontFamily: fonts.sans, fontSize: "0.6rem", letterSpacing: "0.15em", textAlign: "center" as const, marginTop: "0.25rem", transition: "color 0.3s ease" },
+} as const;
+
+// ─── Componente ──────────────────────────────────────────────────────────────
+
 export function MusicPlayer() {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying,   setIsPlaying]   = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [bars, setBars] = useState([0.3, 0.5, 0.7, 0.4, 0.6]);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const schedulerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const chordIndexRef = useRef(0);
+  const [bars,        setBars]        = useState([0.3, 0.5, 0.7, 0.4, 0.6]);
+
+  const audioCtxRef    = useRef<AudioContext | null>(null);
+  const schedulerRef   = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const chordIndexRef  = useRef(0);
   const activeGroupsRef = useRef<OscGroup[]>([]);
-  const animFrameRef = useRef<number | null>(null);
-  const masterGainRef = useRef<GainNode | null>(null);
+  const animFrameRef   = useRef<number | null>(null);
+  const masterGainRef  = useRef<GainNode | null>(null);
 
   const getCtx = () => {
-    if (!audioCtxRef.current) {
-      audioCtxRef.current = new AudioContext();
-    }
+    if (!audioCtxRef.current) audioCtxRef.current = new AudioContext();
     return audioCtxRef.current;
   };
 
@@ -38,30 +46,22 @@ export function MusicPlayer() {
     chordGain.gain.linearRampToValueAtTime(0.055, startTime + FADE_TIME);
     chordGain.gain.setValueAtTime(0.055, startTime + duration - FADE_TIME);
     chordGain.gain.linearRampToValueAtTime(0, startTime + duration);
-
-    // Reverb-like effect using delay
     const delay = ctx.createDelay(2.0);
     delay.delayTime.value = 0.3;
     const delayGain = ctx.createGain();
     delayGain.gain.value = 0.25;
-
     chordGain.connect(delay);
     delay.connect(delayGain);
     delayGain.connect(delay);
-
     if (masterGainRef.current) {
       chordGain.connect(masterGainRef.current);
       delayGain.connect(masterGainRef.current);
     }
-
     const oscs: OscillatorNode[] = freqs.map((freq, i) => {
       const osc = ctx.createOscillator();
-      // Mix sine and triangle for soft piano-like tone
       osc.type = i === 0 ? "triangle" : "sine";
       osc.frequency.setValueAtTime(freq, startTime);
-
-      // Slight vibrato
-      const vibrato = ctx.createOscillator();
+      const vibrato     = ctx.createOscillator();
       vibrato.frequency.value = 5;
       const vibratoGain = ctx.createGain();
       vibratoGain.gain.value = 0.8;
@@ -69,189 +69,174 @@ export function MusicPlayer() {
       vibratoGain.connect(osc.frequency);
       vibrato.start(startTime);
       vibrato.stop(startTime + duration);
-
       osc.connect(chordGain);
       osc.start(startTime);
       osc.stop(startTime + duration);
       return osc;
     });
-
     return { oscs, gain: chordGain };
   }, []);
 
   const scheduleNext = useCallback(() => {
     const ctx = getCtx();
     if (!masterGainRef.current) return;
-
-    const now = ctx.currentTime;
-    const idx = chordIndexRef.current % CHORDS.length;
-    const freqs = CHORDS[idx];
-
-    const group = playChord(ctx, freqs, now, CHORD_DURATION + FADE_TIME);
-    activeGroupsRef.current.push(group);
-
-    // Cleanup old groups
-    activeGroupsRef.current = activeGroupsRef.current.slice(-4);
-
+    const idx   = chordIndexRef.current % CHORDS.length;
+    const group = playChord(ctx, CHORDS[idx], ctx.currentTime, CHORD_DURATION + FADE_TIME);
+    activeGroupsRef.current = [...activeGroupsRef.current.slice(-4), group];
     chordIndexRef.current++;
-
     schedulerRef.current = setTimeout(() => {
-      if (audioCtxRef.current?.state === "running") {
-        scheduleNext();
-      }
-    }, (CHORD_DURATION) * 1000);
+      if (audioCtxRef.current?.state === "running") scheduleNext();
+    }, CHORD_DURATION * 1000);
   }, [playChord]);
 
   const startMusic = useCallback(async () => {
     const ctx = getCtx();
     if (ctx.state === "suspended") await ctx.resume();
-
     const master = ctx.createGain();
     master.gain.value = 0.7;
     master.connect(ctx.destination);
     masterGainRef.current = master;
-
     chordIndexRef.current = 0;
     scheduleNext();
   }, [scheduleNext]);
 
   const stopMusic = useCallback(() => {
     if (schedulerRef.current) clearTimeout(schedulerRef.current);
-
     const ctx = audioCtxRef.current;
     if (ctx && masterGainRef.current) {
       masterGainRef.current.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8);
       setTimeout(() => {
         activeGroupsRef.current = [];
-        masterGainRef.current = null;
+        masterGainRef.current   = null;
       }, 900);
     }
   }, []);
 
   const toggle = async () => {
-    if (isPlaying) {
-      stopMusic();
-      setIsPlaying(false);
-    } else {
-      await startMusic();
-      setIsPlaying(true);
-    }
+    if (isPlaying) { stopMusic(); setIsPlaying(false); }
+    else           { await startMusic(); setIsPlaying(true); }
   };
 
-  // Animated bars when playing
+  // Barras animadas
   useEffect(() => {
     if (isPlaying) {
       const animate = () => {
         setBars(prev => prev.map(() => 0.2 + Math.random() * 0.8));
-        animFrameRef.current = requestAnimationFrame(() => {
-          setTimeout(animate, 120 + Math.random() * 100);
-        });
+        animFrameRef.current = requestAnimationFrame(() =>
+          setTimeout(animate, 120 + Math.random() * 100)
+        );
       };
       animate();
     } else {
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
       setBars([0.3, 0.5, 0.7, 0.4, 0.6]);
     }
-    return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-    };
+    return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current); };
   }, [isPlaying]);
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      stopMusic();
-      if (schedulerRef.current) clearTimeout(schedulerRef.current);
-    };
-  }, [stopMusic]);
+  useEffect(() => () => { stopMusic(); if (schedulerRef.current) clearTimeout(schedulerRef.current); }, [stopMusic]);
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-2">
-      {/* Tooltip */}
-      {showTooltip && (
-        <div
-          className="px-3 py-2 rounded-sm text-xs whitespace-nowrap"
-          style={{
-            background: "rgba(28,42,58,0.95)",
-            border: "1px solid rgba(74,127,165,0.3)",
-            color: "#C8D9E6",
-            fontFamily: "'Lato', sans-serif",
-            letterSpacing: "0.1em",
-            backdropFilter: "blur(8px)",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.3)"
-          }}
-        >
-          {isPlaying ? "Pausar música" : "Reproducir música"}
-        </div>
-      )}
+    <>
+      <style>{`
+        @keyframes pulse-ring {
+          0%   { transform: scale(1);   opacity: 0.6; }
+          100% { transform: scale(1.6); opacity: 0;   }
+        }
+        .music-btn:hover  { transform: scale(1.1) !important; }
+        .music-btn:active { transform: scale(0.95) !important; }
+        .spotify-link:hover { color: #1DB954 !important; border-color: #1DB954 !important; }
+      `}</style>
 
-      {/* Main button */}
-      <button
-        onClick={toggle}
-        onMouseEnter={() => setShowTooltip(true)}
-        onMouseLeave={() => setShowTooltip(false)}
-        className="relative w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
-        style={{
-          background: isPlaying
-            ? "linear-gradient(135deg, #4A7FA5, #3A6585)"
-            : "linear-gradient(135deg, rgba(44,61,79,0.95), rgba(28,42,58,0.95))",
-          border: `1px solid ${isPlaying ? "rgba(143,175,194,0.5)" : "rgba(74,127,165,0.35)"}`,
-          boxShadow: isPlaying
-            ? "0 0 24px rgba(74,127,165,0.5), 0 4px 16px rgba(0,0,0,0.3)"
-            : "0 4px 16px rgba(0,0,0,0.3)",
-          backdropFilter: "blur(12px)",
-        }}
-        aria-label={isPlaying ? "Pausar música" : "Reproducir música"}
-      >
-        {/* Pulsing ring when playing */}
-        {isPlaying && (
-          <span
-            className="absolute inset-0 rounded-full animate-ping"
-            style={{ background: "rgba(74,127,165,0.2)" }}
-          />
-        )}
+      <div style={S.wrapper}>
 
-        {/* Waveform bars OR play icon */}
-        {isPlaying ? (
-          <div className="flex items-center gap-[3px] h-5 relative z-10">
-            {bars.map((h, i) => (
-              <div
-                key={i}
-                className="w-[3px] rounded-full transition-all"
-                style={{
-                  height: `${h * 20}px`,
-                  background: "#F4EDE4",
-                  transition: "height 0.12s ease",
-                }}
-              />
-            ))}
+        {/* Tooltip */}
+        {/* {showTooltip && (
+          <div style={S.tooltip}>
+            {isPlaying ? "Pausar música" : "Reproducir música ambiental"}
           </div>
-        ) : (
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="relative z-10 ml-0.5">
-            <path d="M6 4L16 10L6 16V4Z" fill="#8FAFC2"/>
-          </svg>
-        )}
-      </button>
+        )} */}
 
-      {/* Song label */}
-      <div
-        className="px-3 py-1 rounded-sm"
-        style={{
-          background: "rgba(28,42,58,0.85)",
-          border: "1px solid rgba(74,127,165,0.15)",
-          backdropFilter: "blur(8px)"
-        }}
-      >
-        <p style={{
-          fontFamily: "'Crimson Text', serif",
-          fontSize: "0.7rem",
-          color: "#6B8FA3",
-          fontStyle: "italic",
-          letterSpacing: "0.05em"
-        }}>
-          {isPlaying ? "♪ Ambiente romántico" : "Música ambiental"}
-        </p>
+        {/* Link Spotify */}
+        {/* <a
+          href="https://open.spotify.com/playlist/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="spotify-link"
+          style={S.spotifyLink}
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+          </svg>
+          Nuestra playlist
+        </a> */}
+
+        {/* Botón principal */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <button
+            onClick={toggle}
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+            className="music-btn"
+            style={{
+              position:   "relative",
+              width:      "56px",
+              height:     "56px",
+              borderRadius: "50%",
+              display:    "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "transform 0.2s ease, box-shadow 0.3s ease",
+              background: isPlaying
+                ? `linear-gradient(135deg, ${colors.accentTeal}, #3A6585)`
+                : `linear-gradient(135deg, rgba(44,61,79,0.95), rgba(28,42,58,0.95))`,
+              border: `1px solid ${isPlaying ? "rgba(143,175,194,0.5)" : colors.border}`,
+              boxShadow: isPlaying
+                ? `0 0 24px rgba(74,127,165,0.5), 0 4px 16px rgba(0,0,0,0.3)`
+                : "0 4px 16px rgba(0,0,0,0.3)",
+              backdropFilter: "blur(12px)",
+              cursor: "pointer",
+            }}
+            aria-label={isPlaying ? "Pausar música" : "Reproducir música"}
+          >
+            {/* Ring pulsante */}
+            {isPlaying && (
+              <div style={{
+                position:   "absolute",
+                inset:      "-4px",
+                borderRadius: "50%",
+                border:     `1px solid ${colors.accentTeal}`,
+                animation:  "pulse-ring 1.5s ease-out infinite",
+                pointerEvents: "none",
+              }} />
+            )}
+
+            {/* Barras o ícono play */}
+            {isPlaying ? (
+              <div style={{ display: "flex", alignItems: "center", gap: "2px", height: "24px" }}>
+                {bars.map((h, i) => (
+                  <div key={i} style={{
+                    width:        "3px",
+                    height:       `${h * 20}px`,
+                    borderRadius: "2px",
+                    background:   colors.textPrimary,
+                    transition:   "height 0.15s ease",
+                  }} />
+                ))}
+              </div>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M6 4L14 9L6 14V4Z" fill={colors.accentBlue}/>
+              </svg>
+            )}
+          </button>
+
+          {/* Label */}
+          {/* <p style={{ ...S.label, color: isPlaying ? colors.accentBlue : `${colors.accentBlue}80` }}>
+            {isPlaying ? "♪ Ambiente" : "Música"}
+          </p> */}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

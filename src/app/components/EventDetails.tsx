@@ -1,221 +1,170 @@
+import { useEffect, useRef } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import theme, { colors, fonts, gradients, shadows, dressPalette } from "../../styles/theme";
+import venueImage from "../../assets/jiwasa.png";
+// const venueImage = "https://images.unsplash.com/photo-1586880043376-2b7bd270cd4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
 
-const venueImage = "https://images.unsplash.com/photo-1586880043376-2b7bd270cd4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxydXN0aWMlMjB3ZWRkaW5nJTIwdmVudWUlMjBiYXJuJTIwd29vZHxlbnwxfHx8fDE3NzcwNDQxMTF8MA&ixlib=rb-4.1.0&q=80&w=1080";
-
-const ChurchIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <path d="M16 2L16 8M13 5H19" stroke="#8FAFC2" strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M8 10H24V28H8V10Z" stroke="#8FAFC2" strokeWidth="1.5"/>
-    <path d="M13 28V20H19V28" stroke="#8FAFC2" strokeWidth="1.5"/>
-    <path d="M11 14H14M18 14H21M11 18H14M18 18H21" stroke="#8FAFC2" strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M4 28H28" stroke="#8FAFC2" strokeWidth="1.5" strokeLinecap="round"/>
-  </svg>
-);
-
-const DinnerIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <path d="M10 6V14C10 16.2 11.8 18 14 18V28M14 6V28" stroke="#8FAFC2" strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M20 6C20 6 22 8 22 12C22 15 20 16 20 16V28" stroke="#8FAFC2" strokeWidth="1.5" strokeLinecap="round"/>
-    <circle cx="16" cy="16" r="13" stroke="#8FAFC2" strokeWidth="1" opacity="0.2"/>
-  </svg>
-);
+// ─── Íconos ──────────────────────────────────────────────────────────────────
 
 const MapPinIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <path d="M9 1C6.24 1 4 3.24 4 6C4 9.75 9 17 9 17C9 17 14 9.75 14 6C14 3.24 11.76 1 9 1Z" fill="#4A7FA5" opacity="0.8"/>
-    <circle cx="9" cy="6" r="2" fill="#F4EDE4"/>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M8 1C5.24 1 3 3.24 3 6C3 9.5 8 15 8 15C8 15 13 9.5 13 6C13 3.24 10.76 1 8 1Z"
+      stroke={colors.accentBlue} strokeWidth="1.3"/>
+    <circle cx="8" cy="6" r="2" stroke={colors.accentBlue} strokeWidth="1.3"/>
   </svg>
 );
 
 const ClockIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <circle cx="9" cy="9" r="7" stroke="#4A7FA5" strokeWidth="1.5" opacity="0.8"/>
-    <path d="M9 5V9L11.5 11.5" stroke="#4A7FA5" strokeWidth="1.5" strokeLinecap="round" opacity="0.8"/>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <circle cx="8" cy="8" r="6.5" stroke={colors.accentBlue} strokeWidth="1.3"/>
+    <path d="M8 4.5V8L10.5 10" stroke={colors.accentBlue} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
+const DressIcon = () => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+    <path d="M10 4C10 4 8 8 6 10C4 12 2 13 2 13L7 16L6 28H22L21 16L26 13C26 13 24 12 22 10C20 8 18 4 18 4"
+      stroke={colors.accentBlue} strokeWidth="1.5" strokeLinejoin="round"/>
+    <path d="M10 4H18" stroke={colors.accentBlue} strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M14 4V9" stroke={colors.accentBlue} strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+);
+
+// ─── Estilos ─────────────────────────────────────────────────────────────────
+
+const S = {
+  section:    { background: colors.bgLight, padding: "5rem 1.5rem" },
+  label:      { color: colors.accentTeal, fontFamily: fonts.sans, fontSize: "0.7rem", letterSpacing: "0.45em", textTransform: "uppercase" as const, marginBottom: "0.75rem" },
+  heading:    { fontFamily: fonts.display, color: colors.bgCard, fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 400, fontStyle: "italic" as const, marginBottom: "3rem" },
+  card:       { background: colors.bgWhite, borderRadius: "6px", overflow: "hidden" as const, boxShadow: shadows.card, border: `1px solid ${colors.borderLight}` },
+  cardLabel:  { fontFamily: fonts.sans, fontSize: "0.65rem", letterSpacing: "0.35em", textTransform: "uppercase" as const, color: colors.accentBlue, marginBottom: "0.5rem" },
+  venueName:  { fontFamily: fonts.display, color: colors.bgCard, fontSize: "clamp(1.6rem, 4vw, 2.2rem)", fontWeight: 400, margin: "0.25rem 0 1.25rem" },
+  infoRow:    { display: "flex", alignItems: "center", gap: "0.5rem" },
+  infoText:   { fontFamily: fonts.sans, fontSize: "0.85rem", color: colors.textMid, lineHeight: 1.5 },
+  note:       { fontFamily: fonts.serif, fontStyle: "italic" as const, color: colors.textMuted, fontSize: "0.95rem", lineHeight: 1.7, borderLeft: `2px solid ${colors.accentTeal}`, paddingLeft: "1rem", opacity: 0.9 },
+  mapLink:    { display: "inline-flex" as const, alignItems: "center", gap: "0.4rem", fontFamily: fonts.sans, fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: colors.accentTeal, textDecoration: "none", borderBottom: `1px solid ${colors.accentTeal}`, paddingBottom: "2px" },
+  dressCard:  { background: gradients.cardDress, borderRadius: "6px", padding: "2.5rem", textAlign: "center" as const, border: `1px solid ${colors.border}` },
+  dressTitle: { fontFamily: fonts.display, color: colors.textPrimary, fontSize: "clamp(1.3rem, 3vw, 1.8rem)", fontWeight: 400, fontStyle: "italic" as const, margin: "0.75rem 0 0.5rem" },
+  dressNote:  { fontFamily: fonts.serif, fontStyle: "italic" as const, color: colors.accentBlue, fontSize: "0.95rem", marginTop: "0.75rem" },
+} as const;
+
+// ─── Reveal style reutilizable ────────────────────────────────────────────────
+
+const revealStyle: React.CSSProperties = {
+  opacity:   0,
+  transform: "translateY(28px)",
+  transition:"opacity 0.7s ease, transform 0.7s ease",
+};
+
+// ─── Componente ──────────────────────────────────────────────────────────────
+
 export function EventDetails() {
+  const cardRef  = useRef<HTMLDivElement>(null);
+  const dressRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).style.opacity   = "1";
+          (e.target as HTMLElement).style.transform = "translateY(0)";
+          observer.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.15 }
+    );
+    [cardRef, dressRef].forEach(r => r.current && observer.observe(r.current));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-24 px-6" style={{ background: "#F4EDE4" }}>
-      <div className="max-w-6xl mx-auto">
+    <section style={S.section}>
+      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+
         {/* Header */}
-        <div className="text-center mb-16">
-          <p className="tracking-[0.4em] uppercase mb-3 text-xs" style={{ color: "#4A7FA5", fontFamily: "'Lato', sans-serif" }}>
-            ✦ Detalles del Evento ✦
-          </p>
-          <h2 style={{
-            fontFamily: "'Playfair Display', serif",
-            color: "#2C3D4F",
-            fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
-            fontWeight: 400
-          }}>
-            Acompáñanos en este día especial
-          </h2>
-          <div className="flex items-center justify-center gap-3 mt-4">
-            <div className="h-px w-16" style={{ background: "linear-gradient(to right, transparent, #8FAFC2)" }} />
-            <svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4" fill="#4A7FA5" opacity="0.5"/></svg>
-            <div className="h-px w-16" style={{ background: "linear-gradient(to left, transparent, #8FAFC2)" }} />
-          </div>
+        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+          <p style={S.label}>✦ Detalles del Evento ✦</p>
+          <h2 style={S.heading}>Acompáñanos en este día especial</h2>
         </div>
- {/* Ceremony Card */}
-        <div className="grid md:grid-cols-2 gap-8">
-         
-          <div className="relative rounded-sm overflow-hidden" style={{
-            background: "linear-gradient(145deg, #2C3D4F, #3A5068)",
-            boxShadow: "0 8px 32px rgba(44,61,79,0.3)"
-          }}>
-            <div className="absolute inset-0 opacity-5" style={{
-              backgroundImage: `repeating-linear-gradient(
-                87deg,
-                transparent,
-                transparent 3px,
-                rgba(255,255,255,0.15) 3px,
-                rgba(255,255,255,0.15) 4px
-              )`
-            }} />
-            <div className="absolute inset-3 border opacity-20 pointer-events-none" style={{ borderColor: "#8FAFC2" }} />
 
-            <div className="relative p-10">
-              <div className="flex items-center gap-3 mb-6">
-                <ChurchIcon />
-                <span className="tracking-[0.3em] uppercase text-xs" style={{ color: "#8FAFC2", fontFamily: "'Lato', sans-serif" }}>Ceremonia</span>
-              </div>
+        {/* ── Card Venue ──────────────────────────────────────────────── */}
+        <div ref={cardRef} style={{ ...S.card, ...revealStyle, marginBottom: "2rem" }}>
 
-              <h3 style={{
-                fontFamily: "'Playfair Display', serif",
-                color: "#F4EDE4",
-                fontSize: "1.8rem",
-                fontWeight: 400,
-                marginBottom: "16px"
-              }}>
-                Jiwasa
-              </h3>
-
-              <div className="space-y-3 mb-8">
-                <div className="flex items-center gap-3">
-                  <ClockIcon />
-                  <span style={{ color: "#C8D9E6", fontFamily: "'Crimson Text', serif", fontSize: "1.05rem" }}>12:00 PM — Sábado, 1 de agosto</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MapPinIcon />
-                  <span style={{ color: "#C8D9E6", fontFamily: "'Crimson Text', serif", fontSize: "1.05rem" }}>Carretera El Alto - Mallasilla, Achocalla, La Paz</span>
-                </div>
-              </div>
-
-              <p style={{ color: "#8FAFC2", fontFamily: "'Crimson Text', serif", fontSize: "0.95rem", lineHeight: 1.7, fontStyle: "italic" }}>
-                Les pedimos llegar 15 minutos antes de la hora indicada para que todos estemos listos para este momento tan especial.
-              </p>
-
-              <a
-                href=" https://maps.app.goo.gl/1fCM2CS4UvyX2B4y8?g_st=iw"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-6 px-6 py-2.5 rounded-sm transition-all duration-300 hover:opacity-80"
-                style={{
-                  border: "1px solid #4A7FA5",
-                  color: "#8FAFC2",
-                  fontFamily: "'Lato', sans-serif",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  textDecoration: "none"
-                }}
-              >
-                <MapPinIcon />
-                Ver en el mapa
-              </a>
+          {/* Imagen */}
+          <div style={{ position: "relative", height: "260px", overflow: "hidden" }}>
+            <ImageWithFallback
+              src={venueImage}
+              alt="Jiwasa - Achocalla"
+              className="w-full h-full object-cover"
+            />
+            <div style={{ position: "absolute", inset: 0, background: gradients.imageOverlay }} />
+            <div style={{
+              position: "absolute", bottom: "1.5rem", left: "1.5rem",
+              background: "rgba(28,42,58,0.75)", backdropFilter: "blur(8px)",
+              borderRadius: "4px", padding: "0.5rem 1rem",
+              border: `1px solid rgba(143,175,194,0.25)`,
+            }}>
+              <p style={{ ...S.cardLabel, marginBottom: 0 }}>Ceremonia &amp; Recepción</p>
             </div>
           </div>
 
-          {/* Reception Card */}
-          {/* <div className="relative rounded-sm overflow-hidden" style={{
-            background: "linear-gradient(145deg, #2C3D4F, #3A5068)",
-            boxShadow: "0 8px 32px rgba(44,61,79,0.3)"
-          }}>
-            <div className="absolute inset-0 opacity-5" style={{
-              backgroundImage: `repeating-linear-gradient(
-                87deg,
-                transparent,
-                transparent 3px,
-                rgba(255,255,255,0.15) 3px,
-                rgba(255,255,255,0.15) 4px
-              )`
-            }} />
-            <div className="absolute inset-3 border opacity-20 pointer-events-none" style={{ borderColor: "#8FAFC2" }} />
+          {/* Info */}
+          <div style={{ padding: "2rem 2.5rem 2.5rem" }}>
+            <h3 style={S.venueName}>Jiwasa</h3>
 
-            <div className="relative h-48 overflow-hidden">
-              <ImageWithFallback
-                src={venueImage}
-                alt="Hacienda El Roble"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent, rgba(44,61,79,0.9))" }} />
-            </div>
-
-            <div className="relative p-10 -mt-2">
-              <div className="flex items-center gap-3 mb-6">
-                <DinnerIcon />
-                <span className="tracking-[0.3em] uppercase text-xs" style={{ color: "#8FAFC2", fontFamily: "'Lato', sans-serif" }}>Recepción</span>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", marginBottom: "1.5rem" }}>
+              <div style={S.infoRow}>
+                <ClockIcon />
+                <span style={S.infoText}>12:00 PM · Sábado, 1 de agosto, 2026</span>
               </div>
-
-              <h3 style={{
-                fontFamily: "'Playfair Display', serif",
-                color: "#F4EDE4",
-                fontSize: "1.8rem",
-                fontWeight: 400,
-                marginBottom: "16px"
-              }}>
-                Hacienda El Roble
-              </h3>
-
-              <div className="space-y-3 mb-8">
-                <div className="flex items-center gap-3">
-                  <ClockIcon />
-                  <span style={{ color: "#C8D9E6", fontFamily: "'Crimson Text', serif", fontSize: "1.05rem" }}>6:30 PM — Hasta las 2:00 AM</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MapPinIcon />
-                  <span style={{ color: "#C8D9E6", fontFamily: "'Crimson Text', serif", fontSize: "1.05rem" }}>Carretera Nacional Km. 23, Monterrey</span>
-                </div>
-              </div>
-
-              <p style={{ color: "#8FAFC2", fontFamily: "'Crimson Text', serif", fontSize: "0.95rem", lineHeight: 1.7, fontStyle: "italic" }}>
-                La noche promete ser mágica con cena, baile y muchos momentos inolvidables en esta hermosa hacienda rústica.
-              </p>
-
-              <a
-                href="https://maps.google.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-6 px-6 py-2.5 rounded-sm transition-all duration-300 hover:opacity-80"
-                style={{
-                  border: "1px solid #4A7FA5",
-                  color: "#8FAFC2",
-                  fontFamily: "'Lato', sans-serif",
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.15em",
-                  textTransform: "uppercase",
-                  textDecoration: "none"
-                }}
-              >
+              <div style={S.infoRow}>
                 <MapPinIcon />
-                Ver en el mapa
-              </a>
+                <span style={S.infoText}>Carretera El Alto - Mallasilla, Achocalla, La Paz</span>
+              </div>
             </div>
-          </div> */}
+
+            <p style={{ ...S.note, marginBottom: "1.75rem" }}>
+              Les pedimos llegar 15 minutos antes de la hora indicada para que todos estemos listos para este momento tan especial.
+            </p>
+
+            <a
+              href="https://maps.app.goo.gl/1fCM2CS4UvyX2B4y8?g_st=iw"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={S.mapLink}
+            >
+              <MapPinIcon />
+              Ver en Google Maps
+            </a>
+          </div>
         </div>
 
-        {/* Dress code */}
-        <div className="mt-8 p-8 rounded-sm text-center" style={{
-          background: "rgba(74,127,165,0.08)",
-          border: "1px solid rgba(74,127,165,0.2)"
-        }}>
-          <p className="tracking-[0.35em] uppercase text-xs mb-2" style={{ color: "#4A7FA5", fontFamily: "'Lato', sans-serif" }}>Código de Vestimenta</p>
-          <p style={{ fontFamily: "'Playfair Display', serif", color: "#2C3D4F", fontSize: "1.5rem", fontWeight: 400 }}>Formal Elegante</p>
-          <p style={{ fontFamily: "'Crimson Text', serif", color: "#6B8FA3", fontSize: "1rem", marginTop: "8px" }}>
-            Paleta sugerida: tonos azul acero, crema, gris y café rústico?
-          </p>
+        {/* ── Card Dress Code ─────────────────────────────────────────── */}
+        <div ref={dressRef} style={{ ...S.dressCard, ...revealStyle, transitionDelay: "0.15s" }}>
+          <DressIcon />
+          <p style={{ ...S.cardLabel, color: colors.accentBlue, marginTop: "0.75rem" }}>Código de Vestimenta</p>
+          <h3 style={S.dressTitle}>Formal Elegante</h3>
+
+          {/* Paleta visual */}
+          <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", margin: "1.25rem 0", flexWrap: "wrap" }}>
+            {dressPalette.map((p) => (
+              <div key={p.color} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem" }}>
+                <div style={{
+                  width: "36px", height: "36px", borderRadius: "50%",
+                  background: p.color,
+                  border: "2px solid rgba(255,255,255,0.15)",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
+                }} />
+                <span style={{ fontFamily: fonts.sans, fontSize: "0.6rem", color: colors.accentBlue, letterSpacing: "0.1em" }}>
+                  {p.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <p style={S.dressNote}>"Tonos tierra y pasteles que abracen la naturaleza de Jiwasa"</p>
         </div>
+
       </div>
     </section>
   );
