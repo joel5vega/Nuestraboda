@@ -18,7 +18,7 @@ const scheduleItems = [
 // ─── Estilos ─────────────────────────────────────────────────────────────────
 
 const S = {
-  section:    { background: colors.bgCard, padding: "5rem 1.5rem" },
+  section:    {  padding: "5rem 1.5rem" },
   label:      { color: colors.accentBlue, fontFamily: fonts.sans, fontSize: "0.7rem", letterSpacing: "0.45em", textTransform: "uppercase" as const, marginBottom: "0.75rem" },
   heading:    { fontFamily: fonts.display, color: colors.textPrimary, fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 400, fontStyle: "italic" as const },
   time:       { fontFamily: fonts.sans, fontSize: "0.72rem", letterSpacing: "0.2em", color: colors.accentTeal, textTransform: "uppercase" as const, marginBottom: "0.25rem" },

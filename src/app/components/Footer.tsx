@@ -16,7 +16,7 @@ const CrossIcon = () => (
 // ─── Estilos ─────────────────────────────────────────────────────────────────
 
 const S = {
-  section:   { background: `linear-gradient(to bottom, ${colors.bgCard}, #111D28)`, padding: "5rem 1.5rem 3rem" },
+  section:   {  padding: "5rem 1.5rem 3rem" },
   names:     { fontFamily: fonts.display, color: colors.textPrimary, fontSize: "clamp(2rem, 7vw, 4rem)", fontWeight: 400, letterSpacing: "0.02em" },
   ampersand: { fontFamily: fonts.display, color: colors.accentTeal, fontSize: "clamp(1.4rem, 4vw, 2.5rem)", fontStyle: "italic" as const, margin: "0 0.75rem" },
   date:      { fontFamily: fonts.sans, color: colors.accentBlue, fontSize: "0.8rem", letterSpacing: "0.4em", textTransform: "uppercase" as const, marginTop: "0.75rem" },
@@ -24,7 +24,7 @@ const S = {
   colTitle:  { fontFamily: fonts.sans, fontSize: "0.65rem", letterSpacing: "0.35em", textTransform: "uppercase" as const, color: colors.accentTeal, marginBottom: "0.75rem" },
   hashtag:   { fontFamily: fonts.display, color: colors.textPrimary, fontSize: "clamp(1.1rem, 3vw, 1.5rem)", fontWeight: 400, fontStyle: "italic" as const },
   phone:     { fontFamily: fonts.sans, color: colors.textPrimary, fontSize: "1rem", textDecoration: "none", letterSpacing: "0.05em", transition: "color 0.2s ease" },
-  divider:   { height: "1px", background: `linear-gradient(to right, transparent, ${colors.border}, transparent)`, margin: "3rem 0 2rem", opacity: 0.4 },
+  divider:   { height: "1px",  margin: "3rem 0 2rem", opacity: 0.4 },
   bottom:    { fontFamily: fonts.sans, fontSize: "0.72rem", color: colors.accentBlue, letterSpacing: "0.2em", opacity: 0.6 },
 } as const;
 

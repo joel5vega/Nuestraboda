@@ -204,7 +204,6 @@ export function CountdownTimer() {
       `}</style>
 
       <section style={{
-        background: `linear-gradient(to bottom, #243445, #1C2A3A)`,
         padding:    "5rem 1.5rem",
         textAlign:  "center",
       }}>
