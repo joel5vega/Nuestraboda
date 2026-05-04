@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useRef } from "react";
 import { colors }        from "../styles/theme";
 import { SplashScreen }  from "./components/SplashScreen";
 import { Navbar }        from "./components/Navbar";
@@ -10,9 +10,9 @@ import { Schedule }      from "./components/Schedule";
 import { Gallery }       from "./components/Gallery";
 import { RSVPForm }      from "./components/RSVPForm";
 import { Footer }        from "./components/Footer";
-import { MusicPlayer }   from "./components/MusicPlayer";
-import { WeddingCursor } from "./components/WeddingCursor";
+import { MusicPlayer, MusicPlayerHandle  }   from "./components/MusicPlayer";
 import { PetalCanvas }   from "./components/PetalCanvas";
+import { RusticDivider } from "./components/RusticDivider"; 
 
 // ── Wave helper ──────────────────────────────────────────────────────────────
 // fill = color de la SIGUIENTE sección
@@ -60,11 +60,11 @@ const Wave = ({
 
 export default function App() {
   const [splashDone, setSplashDone] = useState(false);
-
+const musicRef = useRef<MusicPlayerHandle>(null);
   return (
     <div style={{ fontFamily: "'Lato', sans-serif" }}>
-      <SplashScreen onComplete={() => setSplashDone(true)} />
-      <WeddingCursor />
+      
+      <SplashScreen onComplete={() => setSplashDone(true)} onEnter={() => musicRef.current?.play()}/>
       <PetalCanvas active={splashDone} fixed zIndex={50} />
 
       <div style={{
@@ -80,17 +80,17 @@ export default function App() {
           <Wave fill={colors.bgDark} variant="wave" />
         </section>
 
-        {/* ── Countdown ─── bgDark → siguiente: bgCard */}
+        {/* ── Countdown ─── bgDark → siguiente: bgLight */}
         <section id="countdown" style={{ position: "relative", background: colors.bgDark }}>
           <CountdownTimer />
-          <Wave fill={colors.bgCard} variant="tilt" />
+          <Wave fill={colors.bgLight} variant="curve" />
         </section>
 
         {/* ── Story ─── bgCard → siguiente: bgLight */}
-        <section id="story" style={{ position: "relative", background: colors.bgCard }}>
+        {/* <section id="story" style={{ position: "relative", background: colors.bgCard }}>
           <OurStory />
           <Wave fill={colors.bgLight} variant="curve" />
-        </section>
+        </section> */}
 
         {/* ── Event ─── bgLight → siguiente: bgDark */}
         <section id="event" style={{ position: "relative", background: colors.bgLight }}>
@@ -110,15 +110,15 @@ export default function App() {
           <Wave fill={colors.bgDark} variant="curve" />
         </section>
 
-        {/* ── RSVP ─── bgDark → siguiente: bgDark (Footer mismo color) */}
+        {/* ── RSVP ─── bgDark → siguiente: Footer bgLight */}
         <section id="rsvp" style={{ position: "relative", background: colors.bgDark }}>
           <RSVPForm />
-          <Wave fill={colors.bgDark} variant="tilt" />
+          <Wave fill={colors.bgLight} variant="curve" />
         </section>
 
         {/* ── Footer ─── bgDark (sin wave, es el final) */}
         <Footer />
-        <MusicPlayer />
+        <MusicPlayer ref={musicRef} />
       </div>
     </div>
   );

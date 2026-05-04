@@ -140,12 +140,11 @@ export function EventDetails() {
         </div>
 
         {/* ── Card Dress Code ─────────────────────────────────────────── */}
-        <div ref={dressRef} style={{ ...S.dressCard, ...revealStyle, transitionDelay: "0.15s" }}>
+        {/* <div ref={dressRef} style={{ ...S.dressCard, ...revealStyle, transitionDelay: "0.15s" }}>
           <DressIcon />
           <p style={{ ...S.cardLabel, color: colors.accentBlue, marginTop: "0.75rem" }}>Código de Vestimenta</p>
           <h3 style={S.dressTitle}>Formal Elegante</h3>
 
-          {/* Paleta visual */}
           <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", margin: "1.25rem 0", flexWrap: "wrap" }}>
             {dressPalette.map((p) => (
               <div key={p.color} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem" }}>
@@ -163,7 +162,7 @@ export function EventDetails() {
           </div>
 
           <p style={S.dressNote}>"Tonos tierra y pasteles que abracen la naturaleza de Jiwasa"</p>
-        </div>
+        </div> */}
 
       </div>
     </section>

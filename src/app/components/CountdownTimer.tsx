@@ -242,10 +242,10 @@ export function CountdownTimer() {
           animation:      "fadeInUp 0.6s ease 0.2s both",
         }}>
           {units.map((u, i) => (
-            <>
+            <div key={i}>
               <FlipUnit key={u.label} value={u.value} label={u.label} />
               {i < units.length - 1 && <Separator key={`sep-${i}`} />}
-            </>
+            </div>
           ))}
         </div>
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback ,forwardRef, useImperativeHandle } from "react";
 import { colors, fonts } from "../../styles/theme";
 
 const CHORDS = [
@@ -22,95 +22,28 @@ const S = {
 } as const;
 
 // ─── Componente ──────────────────────────────────────────────────────────────
+export type MusicPlayerHandle = { play: () => void };
 
-export function MusicPlayer() {
+export const MusicPlayer = forwardRef<MusicPlayerHandle>(function MusicPlayer(_, ref) {
   const [isPlaying,   setIsPlaying]   = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [bars,        setBars]        = useState([0.3, 0.5, 0.7, 0.4, 0.6]);
 
-  const audioCtxRef    = useRef<AudioContext | null>(null);
-  const schedulerRef   = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const chordIndexRef  = useRef(0);
-  const activeGroupsRef = useRef<OscGroup[]>([]);
-  const animFrameRef   = useRef<number | null>(null);
-  const masterGainRef  = useRef<GainNode | null>(null);
+  const audioRef = useRef(new Audio(`${import.meta.env.BASE_URL}assets/dandelion.mp3`));
+const animFrameRef = useRef<number | null>(null);
+const startMusic = useCallback(async () => {
+  audioRef.current.loop = true;
+  audioRef.current.volume = 0.7;
+  await audioRef.current.play();
+}, []);
 
-  const getCtx = () => {
-    if (!audioCtxRef.current) audioCtxRef.current = new AudioContext();
-    return audioCtxRef.current;
-  };
+  useImperativeHandle(ref, () => ({
+  play: () => { if (!isPlaying) { startMusic(); setIsPlaying(true); } },
+}));
 
-  const playChord = useCallback((ctx: AudioContext, freqs: number[], startTime: number, duration: number) => {
-    const chordGain = ctx.createGain();
-    chordGain.gain.setValueAtTime(0, startTime);
-    chordGain.gain.linearRampToValueAtTime(0.055, startTime + FADE_TIME);
-    chordGain.gain.setValueAtTime(0.055, startTime + duration - FADE_TIME);
-    chordGain.gain.linearRampToValueAtTime(0, startTime + duration);
-    const delay = ctx.createDelay(2.0);
-    delay.delayTime.value = 0.3;
-    const delayGain = ctx.createGain();
-    delayGain.gain.value = 0.25;
-    chordGain.connect(delay);
-    delay.connect(delayGain);
-    delayGain.connect(delay);
-    if (masterGainRef.current) {
-      chordGain.connect(masterGainRef.current);
-      delayGain.connect(masterGainRef.current);
-    }
-    const oscs: OscillatorNode[] = freqs.map((freq, i) => {
-      const osc = ctx.createOscillator();
-      osc.type = i === 0 ? "triangle" : "sine";
-      osc.frequency.setValueAtTime(freq, startTime);
-      const vibrato     = ctx.createOscillator();
-      vibrato.frequency.value = 5;
-      const vibratoGain = ctx.createGain();
-      vibratoGain.gain.value = 0.8;
-      vibrato.connect(vibratoGain);
-      vibratoGain.connect(osc.frequency);
-      vibrato.start(startTime);
-      vibrato.stop(startTime + duration);
-      osc.connect(chordGain);
-      osc.start(startTime);
-      osc.stop(startTime + duration);
-      return osc;
-    });
-    return { oscs, gain: chordGain };
-  }, []);
-
-  const scheduleNext = useCallback(() => {
-    const ctx = getCtx();
-    if (!masterGainRef.current) return;
-    const idx   = chordIndexRef.current % CHORDS.length;
-    const group = playChord(ctx, CHORDS[idx], ctx.currentTime, CHORD_DURATION + FADE_TIME);
-    activeGroupsRef.current = [...activeGroupsRef.current.slice(-4), group];
-    chordIndexRef.current++;
-    schedulerRef.current = setTimeout(() => {
-      if (audioCtxRef.current?.state === "running") scheduleNext();
-    }, CHORD_DURATION * 1000);
-  }, [playChord]);
-
-  const startMusic = useCallback(async () => {
-    const ctx = getCtx();
-    if (ctx.state === "suspended") await ctx.resume();
-    const master = ctx.createGain();
-    master.gain.value = 0.7;
-    master.connect(ctx.destination);
-    masterGainRef.current = master;
-    chordIndexRef.current = 0;
-    scheduleNext();
-  }, [scheduleNext]);
-
-  const stopMusic = useCallback(() => {
-    if (schedulerRef.current) clearTimeout(schedulerRef.current);
-    const ctx = audioCtxRef.current;
-    if (ctx && masterGainRef.current) {
-      masterGainRef.current.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8);
-      setTimeout(() => {
-        activeGroupsRef.current = [];
-        masterGainRef.current   = null;
-      }, 900);
-    }
-  }, []);
+const stopMusic = useCallback(() => {
+  audioRef.current.pause();
+}, []);
 
   const toggle = async () => {
     if (isPlaying) { stopMusic(); setIsPlaying(false); }
@@ -134,7 +67,7 @@ export function MusicPlayer() {
     return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current); };
   }, [isPlaying]);
 
-  useEffect(() => () => { stopMusic(); if (schedulerRef.current) clearTimeout(schedulerRef.current); }, [stopMusic]);
+ useEffect(() => () => { stopMusic(); }, [stopMusic]);
 
   return (
     <>
@@ -239,4 +172,4 @@ export function MusicPlayer() {
       </div>
     </>
   );
-}
+});

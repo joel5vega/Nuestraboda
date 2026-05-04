@@ -3,7 +3,6 @@ import { colors, fonts } from "../../styles/theme";
 
 const navLinks = [
   { label: "Inicio",           href: "#hero"     },
-  { label: "Nuestra historia", href: "#story"    },
   { label: "Evento",           href: "#event"    },
   { label: "Programa",         href: "#schedule" },
   { label: "Galería",          href: "#gallery"  },

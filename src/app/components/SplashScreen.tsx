@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import  theme from "../../styles/theme";
+import theme from "../../styles/theme";
+
 
 // ─── Tipos ───────────────────────────────────────────────────────────────────
 type Phase =
@@ -9,6 +10,7 @@ type Phase =
   | "card-expand"     // tarjeta expandiéndose a pantalla completa
   | "content-reveal"  // contenido (nombres, fecha) aparece
   | "exiting";        // fade-out final
+
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const AnimatedName = ({ name, delay = 0 }: { name: string; delay?: number }) => (
@@ -27,10 +29,12 @@ const AnimatedName = ({ name, delay = 0 }: { name: string; delay?: number }) => 
   </span>
 );
 
+
 // ─── Componente ──────────────────────────────────────────────────────────────
-export function SplashScreen({ onComplete }: { onComplete: () => void }) {
+export function SplashScreen({ onComplete, onEnter }: { onComplete: () => void; onEnter?: () => void }) {
   const [phase, setPhase] = useState<Phase>("envelope-idle");
   const [btnHover, setBtnHover] = useState(false);
+
 
   // Secuencia automática de fases
   useEffect(() => {
@@ -41,13 +45,17 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
     return () => [t1, t2, t3, t4].forEach(clearTimeout);
   }, []);
 
+
   const handleEnter = () => {
     setPhase("exiting");
+    onEnter?.();
     setTimeout(onComplete, 700);
   };
 
+
   const isExpanded = phase === "card-expand" || phase === "content-reveal" || phase === "exiting";
   const showContent = phase === "content-reveal" || phase === "exiting";
+
 
   return (
     <>
@@ -62,20 +70,21 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
           0%, 100% { opacity: 0.3; transform: scale(1);   }
           50%       { opacity: 0.6; transform: scale(1.5); }
         }
-        @keyframes cardRise {
-          from { transform: translateY(30px); opacity: 0.6; }
-          to   { transform: translateY(-55px); opacity: 1;  }
-        }
         @keyframes flapOpen {
           from { transform: rotateX(0deg); }
           to   { transform: rotateX(-175deg); }
         }
+          @keyframes gentlePulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 0.9; transform: scale(1.04); }
+}
         @keyframes envelopeShake {
           0%, 100% { transform: translateX(0) rotate(0deg); }
           25%       { transform: translateX(-3px) rotate(-0.5deg); }
           75%       { transform: translateX(3px) rotate(0.5deg); }
         }
       `}</style>
+
 
       {/* ── Fondo ─────────────────────────────────────────────────────────── */}
       <div style={{
@@ -92,6 +101,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
         overflow:       "hidden",
       }}>
 
+
         {/* Puntos de luz */}
         {[...Array(8)].map((_, i) => (
           <div key={i} style={{
@@ -105,27 +115,29 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
           }} />
         ))}
 
+
         {/* Marco ornamental */}
         <div style={{ position: "absolute", inset: "1.5rem", border: `1px solid ${theme.border}`, opacity: 0.12, pointerEvents: "none" }} />
 
+
         {/* ── Escena del sobre ──────────────────────────────────────────── */}
         <div style={{
-          position:   "relative",
-          display:    "flex",
-          alignItems: "center",
+          position:       "relative",
+          display:        "flex",
+          alignItems:     "center",
           justifyContent: "center",
-          // Cuando se expande, este contenedor crece a pantalla completa
-          width:      isExpanded ? "100vw" : "auto",
-          height:     isExpanded ? "100vh" : "auto",
-          transition: "width 0.6s ease, height 0.6s ease",
+          width:          isExpanded ? "100vw" : "auto",
+          height:         isExpanded ? "100vh" : "auto",
+          transition:     "width 0.6s ease, height 0.6s ease",
         }}>
+
 
           {/* ── Tarjeta (dentro y encima del sobre) ───────────────────── */}
           <div style={{
-            position:       isExpanded ? "absolute" : "absolute",
+            position:       "absolute",
             zIndex:         10,
             background:     theme.colors.cream,
-            borderRadius:   isExpanded ? "0px" : "4px",
+            borderRadius:   isExpanded ? "4px" : "4px",
             display:        "flex",
             flexDirection:  "column",
             alignItems:     "center",
@@ -134,19 +146,18 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
             padding:        isExpanded ? "3rem 2rem" : "0",
             overflow:       "hidden",
 
-            // Tamaño: pequeño dentro del sobre → pantalla completa
-            width:  isExpanded ? "100vw" : "180px",
-            height: isExpanded ? "100vh" : "110px",
+            // Tamaño: pequeño dentro del sobre → tarjeta real centrada
+            width:  isExpanded ? "min(600px, 90vw)" : "180px",
+            height: isExpanded ? "min(700px, 85vh)" : "110px",
 
-            // Posición: sale del sobre hacia arriba
-            bottom: isExpanded ? "auto" : "calc(50% - 10px)",
-            top:    isExpanded ? 0 : "auto",
-            left:   isExpanded ? 0 : "50%",
+            // Siempre centrado con top/left + translate para transición suave
+            top:       "50%",
+            left:      "50%",
             transform: isExpanded
-              ? "none"
+              ? "translate(-50%, -50%)"
               : phase === "card-rising"
-                ? "translateX(-50%) translateY(-55px)"
-                : "translateX(-50%) translateY(30px)",
+                ? "translate(-50%, calc(-50% - 55px))"
+                : "translate(-50%, calc(-50% + 30px))",
 
             transition: phase === "card-rising"
               ? "transform 0.6s cubic-bezier(0.34,1.4,0.64,1), opacity 0.4s ease"
@@ -157,7 +168,12 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
             opacity: phase === "envelope-idle" || phase === "flap-open" ? 0
                    : phase === "card-rising"   ? 1
                    : 1,
+
+            boxShadow: isExpanded
+              ? "0 25px 80px rgba(0,0,0,0.5), 0 8px 24px rgba(0,0,0,0.3)"
+              : "none",
           }}>
+
 
             {/* Textura rústica sobre la tarjeta */}
             <div style={{
@@ -168,17 +184,26 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
               pointerEvents:   "none",
             }} />
 
+
             {/* Contenido de la tarjeta — visible solo en content-reveal */}
             {showContent && (
-              <div style={{ position: "relative", zIndex: 1 }}>
+              <div style={{ position: "relative", zIndex: 1, width: "100%" }}>
+
 
                 {/* Marco ornamental de la tarjeta */}
-                <div style={{ position: "absolute", inset: isExpanded ? "1.5rem" : "0.5rem", border: `1px solid ${theme.leaf}`, opacity: 0.25, pointerEvents: "none", borderRadius: "2px" }} />
+                <div style={{
+                  position:     "absolute",
+                  inset:        "1.5rem",
+                  border:       `0px solid ${theme.leaf}`,
+                  opacity:      0.25,
+                  pointerEvents:"none",
+                  borderRadius: "2px",
+                }} />
 
                 <p style={{
                   color:          theme.leaf,
                   fontFamily:     theme.fonts.sans,
-                  fontSize:       "0.65rem",
+                  fontSize:       ".85rem",
                   letterSpacing:  "0.5em",
                   textTransform:  "uppercase",
                   marginBottom:   "2rem",
@@ -188,8 +213,9 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
                   ✦ Te invitamos a nuestra boda ✦
                 </p>
 
+
                 {/* Nombres */}
-                <div style={{ display: "flex", alignItems: "center", gap: "1.2rem", marginBottom: "1.2rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "1.2rem", marginBottom: "1.2rem", justifyContent: "center" }}>
                   <h1 style={{
                     fontFamily: theme.fonts.display,
                     fontSize:   "clamp(2.8rem, 9vw, 5rem)",
@@ -218,9 +244,10 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
                   </h1>
                 </div>
 
+
                 {/* Divisor floral */}
                 <div style={{
-                  display:   "flex", alignItems: "center", gap: "1rem",
+                  display:        "flex", alignItems: "center", gap: "1rem",
                   justifyContent: "center", margin: "1rem 0",
                   opacity: 0, animation: "fadeIn 0.5s ease 1.3s forwards",
                 }}>
@@ -234,54 +261,117 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
                   <div style={{ height: "1px", width: "50px", background: `linear-gradient(to left, transparent, ${theme.leaf})` }} />
                 </div>
 
+
                 <p style={{
-                  fontFamily: theme.fonts.serif,
-                  color:      "#4A6070",
-                  fontSize:   "clamp(0.8rem, 2vw, 1rem)",
+                  fontFamily:    theme.fonts.serif,
+                  color:         "#4A6070",
+                  fontSize:      "clamp(0.8rem, 2vw, 1rem)",
                   letterSpacing: "0.2em",
-                  marginBottom: "2.5rem",
-                  opacity:    0,
-                  animation:  "fadeIn 0.5s ease 1.5s forwards",
+                  marginBottom:  "2.5rem",
+                  opacity:       0,
+                  animation:     "fadeIn 0.5s ease 1.5s forwards",
                 }}>
                   SÁBADO · 1 DE AGOSTO, 2026 · JIWASA, ACHOCHALLA
                 </p>
 
+
                 {/* Botón */}
-                <button
+                {/* <button
                   style={{
-                    padding:        "0.75rem 2.5rem",
-                    border:         `1px solid ${theme.leaf}`,
-                    background:     btnHover ? theme.leaf : "transparent",
-                    color:          btnHover ? theme.colors.cream : theme.leaf,
-                    fontFamily:     theme.fonts.sans,
-                    fontSize:       "0.72rem",
-                    letterSpacing:  "0.3em",
-                    textTransform:  "uppercase",
-                    cursor:         "pointer",
-                    transition:     "background 0.3s ease, color 0.3s ease",
-                    opacity:        0,
-                    animation:      "fadeIn 0.6s ease 1.9s forwards",
+                    padding:       "0.75rem 2.5rem",
+                    border:        `1px solid ${theme.leaf}`,
+                    background:    btnHover ? theme.leaf : "transparent",
+                    color:         btnHover ? theme.colors.cream : theme.leaf,
+                    fontFamily:    theme.fonts.sans,
+                    fontSize:      "1.2rem",
+                    letterSpacing: "0.3em",
+                    textTransform: "uppercase",
+                    cursor:        "pointer",
+                    transition:    "background 0.3s ease, color 0.3s ease",
+                    opacity:       0,
+                    animation:     "fadeIn 0.6s ease 1.9s forwards",
                   }}
                   onMouseEnter={() => setBtnHover(true)}
                   onMouseLeave={() => setBtnHover(false)}
                   onClick={handleEnter}
                 >
                   Abrir invitación
-                </button>
+                </button> */}
+                {/* Botón con efectos */}
+<div style={{
+  display:        "flex",
+  flexDirection:  "column",
+  alignItems:     "center",
+  gap:            "0.8rem",
+  opacity:        0,
+  animation:      "fadeIn 0.6s ease 1.9s forwards",
+}}>
+
+
+  {/* Marco rústico exterior */}
+  <div style={{
+    position: "relative",
+    padding:  "6px",
+  }}>
+    {/* Esquinas decorativas */}
+    {[
+      { top: 0, left: 0, borderTop: `1px solid ${theme.leaf}`, borderLeft: `1px solid ${theme.leaf}` },
+      { top: 0, right: 0, borderTop: `1px solid ${theme.leaf}`, borderRight: `1px solid ${theme.leaf}` },
+      { bottom: 0, left: 0, borderBottom: `1px solid ${theme.leaf}`, borderLeft: `1px solid ${theme.leaf}` },
+      { bottom: 0, right: 0, borderBottom: `1px solid ${theme.leaf}`, borderRight: `1px solid ${theme.leaf}` },
+    ].map((corner, i) => (
+      <div key={i} style={{
+        position: "absolute",
+        width:    "10px",
+        height:   "10px",
+        opacity:  0.6,
+        ...corner,
+      }} />
+    ))}
+
+    {/* Botón interior */}
+    <button
+      style={{
+        padding:       "0.75rem 2.5rem",
+        border:        `1px solid ${theme.leaf}`,
+        background:    btnHover ? theme.leaf : "transparent",
+        color:         btnHover ? theme.colors.cream : theme.leaf,
+        fontFamily:    theme.fonts.sans,
+        fontSize:      "0.72rem",
+        letterSpacing: "0.3em",
+        textTransform: "uppercase",
+        cursor:        "pointer",
+        transition:    "background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease",
+        transform:     btnHover ? "scale(1.03)" : "scale(1)",
+        boxShadow:     btnHover ? `0 4px 20px ${theme.leaf}44` : "none",
+        animation:     "fadeIn 0.5s ease 2.2s forwards, gentlePulse 2.5s ease 2.7s infinite",
+        display:       "block",
+      }}
+      onMouseEnter={() => setBtnHover(true)}
+      onMouseLeave={() => setBtnHover(false)}
+      onClick={handleEnter}
+    >
+      Abrir invitación
+    </button>
+  </div>
+</div>
               </div>
             )}
           </div>
 
+
           {/* ── Sobre ────────────────────────────────────────────────────── */}
           {!isExpanded && (
             <div style={{
-              position:   "relative",
-              width:      "260px",
-              height:     "180px",
-              animation:  phase === "envelope-idle"
+              position:    "relative",
+              width:       "260px",
+              height:      "180px",
+              perspective: "600px",   // ← MOVIDO AQUÍ desde la solapa
+              animation:   phase === "envelope-idle"
                 ? "envelopeShake 2s ease-in-out 0.3s 2"
                 : "none",
             }}>
+
 
               {/* Cuerpo del sobre */}
               <div style={{
@@ -294,30 +384,13 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
               }}>
                 {/* Pliegues laterales del sobre */}
                 <div style={{
-                  position: "absolute", inset: 0,
+                  position:   "absolute", inset: 0,
                   background: "linear-gradient(to bottom right, rgba(0,0,0,0.08) 50%, transparent 50%)",
                 }} />
                 <div style={{
-                  position: "absolute", inset: 0,
+                  position:   "absolute", inset: 0,
                   background: "linear-gradient(to bottom left, rgba(0,0,0,0.08) 50%, transparent 50%)",
                 }} />
-                {/* Sello decorativo */}
-                {/* <div style={{
-                  position:     "absolute",
-                  bottom:       "14px",
-                  right:        "16px",
-                  width:        "36px",
-                  height:       "36px",
-                  border:       `1px solid ${theme.leaf}`,
-                  borderRadius: "2px",
-                  display:      "flex",
-                  alignItems:   "center",
-                  justifyContent: "center",
-                  opacity:      0.7,
-                  background:   "rgba(74,127,165,0.1)",
-                }}>
-                  <span style={{ fontSize: "1.2rem" }}>✝️</span>
-                </div> */}
                 {/* Iniciales */}
                 <div style={{
                   position:   "absolute",
@@ -335,6 +408,7 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
                 </div>
               </div>
 
+
               {/* Solapa del sobre — se abre con rotateX */}
               <div style={{
                 position:        "absolute",
@@ -348,12 +422,12 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
                   : "rotateX(0deg)",
                 transition:      "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
                 zIndex:          20,
-                perspective:     "600px",
+                // ← perspective ELIMINADO de aquí
               }}>
                 {/* Forma triangular de la solapa */}
                 <div style={{
-                  width:    0,
-                  height:   0,
+                  width:       0,
+                  height:      0,
                   borderLeft:  "130px solid transparent",
                   borderRight: "130px solid transparent",
                   borderTop:   "90px solid #BFB09C",
@@ -361,8 +435,10 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
                 }} />
               </div>
 
+
             </div>
           )}
+
 
         </div>
       </div>

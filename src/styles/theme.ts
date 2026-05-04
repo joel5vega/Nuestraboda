@@ -6,38 +6,37 @@
 // ── 1. PALETA DE COLORES ─────────────────────────────────────────────────────
 export const colors = {
   // Superficies
-  bgDark:       "#1C2A3A",   // fondo hero, splash, countdown
-  bgMid:        "#243445",   // fondo countdown gradiente inferior
-  bgCard:       "#2C3D4F",   // fondo tarjetas oscuras, OurStory
-  bgCardLight:  "#3A5068",   // gradiente secundario en tarjetas oscuras
-  bgLight:      "#F4EDE4",   // fondo secciones claras (Gallery, EventDetails)
-  bgWhite:      "#FFFFFF",   // fondo tarjeta blanca EventDetails
+  bgDark:       "#16232F",
+  bgMid:        "#1E2E3E",
+  bgCard:       "#253545",
+  bgCardLight:  "#344D64",
+  bgLight:      "#F4EDE4",
+  bgWhite:      "#FFFFFF",
 
   // Texto
-  textPrimary:  "#F4EDE4",   // crema — texto principal sobre fondos oscuros
-  textDark:     "#2C3D4F",   // azul oscuro — texto sobre fondos claros
-  textMid:      "#4A6070",   // gris azulado — texto secundario
-  textMuted:    "#6A8090",   // gris suave — notas, citas
+  textPrimary:  "#F4EDE4",
+  textDark:     "#253545",
+  textMid:      "#445A6E",
+  textMuted:    "#607585",
 
-  // Acentos principales
-  accentBlue:   "#8FAFC2",   // azul acero — labels, líneas, íconos
-  accentTeal:   "#4A7FA5",   // azul teal — hover, línea timeline, bordes
-  accentLeaf:   "#4A7FA5",   // alias de accentTeal (uso en hojas SVG)
+  // Acentos principales — núcleo: #748CAB
+  accentBlue:   "#748CAB",   // ← nuevo núcleo azul acero
+  accentTeal:   "#3E6E96",   // hover, bordes activos
+  accentLeaf:   "#3E6E96",
 
-  // Acentos secundarios
-  accentGold:   "#D4A85A",   // dorado — títulos especiales, sellos
-  accentTerra:  "#C4713A",   // terracota — CTA activo, íconos de acción
-  accentSage:   "#6B7C5E",   // verde oliva — follaje, naturales
-  accentCafe:   "#8B7355",   // café rústico — dress code
+  // Acentos secundarios (sin cambio)
+  accentGold:   "#D4A85A",
+  accentTerra:  "#C4713A",
+  accentSage:   "#6B7C5E",
+  accentCafe:   "#8B7355",
 
   // Utilidades
-  overlay:      "rgba(28,42,58,0.95)",  // lightbox
-  overlayMid:   "rgba(44,61,79,0.5)",   // hover cards
-  border:       "rgba(74,127,165,0.3)", // bordes sutiles
-  borderLight:  "rgba(74,127,165,0.12)",// bordes muy sutiles (fondo claro)
-  divider:      "rgba(0,0,0,0.4)",      // línea divisoria flip card
+  overlay:      "rgba(22,35,47,0.95)",
+  overlayMid:   "rgba(37,53,69,0.5)",
+  border:       "rgba(116,140,171,0.3)",
+  borderLight:  "rgba(116,140,171,0.12)",
+  divider:      "rgba(0,0,0,0.4)",
 } as const;
-
 // ── 2. TIPOGRAFÍAS ───────────────────────────────────────────────────────────
 export const fonts = {
   display: "'Playfair Display', Georgia, serif", // nombres, títulos románticos
@@ -58,12 +57,12 @@ export const shadows = {
 export const gradients = {
   heroOverlay:   "linear-gradient(to bottom, rgba(28,42,58,0.72) 0%, rgba(28,42,58,0.55) 50%, rgba(28,42,58,0.8) 100%)",
   imageOverlay:  "linear-gradient(to bottom, transparent 60%, rgba(44,61,79,0.6))",
-  sectionDark:   "linear-gradient(to bottom, #243445, #1C2A3A)",
-  cardDark:      "linear-gradient(135deg, #3A5068, #2C3D4F)",
-  cardDress:     "linear-gradient(135deg, #2C3D4F, #3A5068)",
-  lineLeft:      `linear-gradient(to right, transparent, #4A7FA5)`,
-  lineRight:     `linear-gradient(to left,  transparent, #4A7FA5)`,
-  flipCard:      "linear-gradient(160deg, #3A5068 0%, #2C3D4F 100%)",
+  sectionDark:   "linear-gradient(to bottom, #1E2E3E, #16232F)",
+  cardDark:      "linear-gradient(135deg, #344D64, #253545)",
+  cardDress:     "linear-gradient(135deg, #253545, #344D64)",
+  lineLeft:      `linear-gradient(to right, transparent, #3E6E96)`,
+  lineRight:     `linear-gradient(to left,  transparent, #3E6E96)`,
+  flipCard:      "linear-gradient(160deg, #344D64 0%, #253545 100%)",
   cardHighlight: "linear-gradient(to bottom, rgba(255,255,255,0.04) 0%, transparent 50%)",
 } as const;
 
@@ -110,11 +109,11 @@ export default theme;
 
 // En tu gradients o directamente como variable
 export const pageBg = `linear-gradient(to bottom,
-  #0C1622 0%,       /* hero oscuro */
-  #111D2A 18%,      /* countdown */
-  #162030 35%,      /* story */
-  #1A2535 52%,      /* event/schedule */
-  #162030 70%,      /* gallery */
-  #111D2A 85%,      /* rsvp */
-  #0C1622 100%      /* footer */
+  #0A1520  0%,       /* hero oscuro */
+  #0F1B28  18%,      /* countdown */
+  #141E2C  35%,      /* story */
+  #182230  52%,      /* event/schedule */
+  #141E2C 70%,      /* gallery */
+  #0F1B28  85%,      /* rsvp */
+  #0A1520  100%      /* footer */
 )`;
