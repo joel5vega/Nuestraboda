@@ -38,7 +38,7 @@ const startMusic = useCallback(async () => {
   audio.volume = 0;
   await audio.play();
 
-  const TARGET  = 0.5;
+  const TARGET  = 0.3;
   const STEP    = 0.01;
   const TICK_MS = 150; // cada 150ms sube 0.01 → llega a 0.7 en ~10.5s
 
