@@ -215,34 +215,51 @@ export function SplashScreen({ onComplete, onEnter }: { onComplete: () => void; 
 
 
                 {/* Nombres */}
-                <div style={{ display: "flex", alignItems: "center", gap: "1.2rem", marginBottom: "1.2rem", justifyContent: "center" }}>
-                  <h1 style={{
-                    fontFamily: theme.fonts.display,
-                    fontSize:   "clamp(2.8rem, 9vw, 5rem)",
-                    color:      "#2C3D4F",
-                    fontWeight: 400,
-                    lineHeight: 1,
-                  }}>
-                    <AnimatedName name="Betania" delay={0.2} />
-                  </h1>
-                  <span style={{
-                    fontFamily: theme.fonts.display,
-                    fontSize:   "clamp(1.8rem, 5vw, 3rem)",
-                    color:      theme.leaf,
-                    fontStyle:  "italic",
-                    opacity:    0,
-                    animation:  "fadeIn 0.5s ease 0.7s forwards",
-                  }}>&amp;</span>
-                  <h1 style={{
-                    fontFamily: theme.fonts.display,
-                    fontSize:   "clamp(2.8rem, 9vw, 5rem)",
-                    color:      "#2C3D4F",
-                    fontWeight: 400,
-                    lineHeight: 1,
-                  }}>
-                    <AnimatedName name="Joel" delay={0.8} />
-                  </h1>
-                </div>
+                {/* Nombres — layout vertical para evitar quiebre de letras */}
+<div style={{ marginBottom: "1.2rem" }}>
+  <h1 style={{
+    fontFamily: theme.fonts.display,
+    fontSize:   "clamp(2.8rem, 12vw, 5rem)",
+    color:      "#2C3D4F",
+    fontWeight: 400,
+    lineHeight: 1.1,
+    whiteSpace: "nowrap",       // ← clave: nunca rompe
+    margin:     0,
+  }}>
+    <AnimatedName name="Joel" delay={0.2} />
+  </h1>
+
+  <div style={{
+    display:        "flex",
+    alignItems:     "center",
+    gap:            "0.8rem",
+    justifyContent: "center",
+    margin:         "0.3rem 0",
+    opacity:        0,
+    animation:      "fadeIn 0.5s ease 0.7s forwards",
+  }}>
+    <div style={{ height: "1px", width: "40px", background: theme.leaf, opacity: 0.5 }} />
+    <span style={{
+      fontFamily: theme.fonts.display,
+      fontSize:   "clamp(1.4rem, 4vw, 2.2rem)",
+      color:      theme.leaf,
+      fontStyle:  "italic",
+    }}>&amp;</span>
+    <div style={{ height: "1px", width: "40px", background: theme.leaf, opacity: 0.5 }} />
+  </div>
+
+  <h1 style={{
+    fontFamily: theme.fonts.display,
+    fontSize:   "clamp(2.8rem, 12vw, 5rem)",
+    color:      "#2C3D4F",
+    fontWeight: 400,
+    lineHeight: 1.1,
+    whiteSpace: "nowrap",       // ← clave: nunca rompe
+    margin:     0,
+  }}>
+    <AnimatedName name="Betania" delay={0.8} />
+  </h1>
+</div>
 
 
                 {/* Divisor floral */}

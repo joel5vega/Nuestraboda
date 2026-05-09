@@ -163,7 +163,7 @@ export function HeroSection({ animate }: Props) {
         >
           <p style={{ ...S.label, marginBottom: "1.5rem" }}>✦ Juntos por siempre ✦</p>
 
-          <h1 style={S.name}>Betania</h1>
+          <h1 style={S.name}>Joel</h1>
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", margin: "0.5rem 0" }}>
             <div style={{ height: "1px", width: "60px", background: colors.accentBlue }} />
@@ -171,7 +171,7 @@ export function HeroSection({ animate }: Props) {
             <div style={{ height: "1px", width: "60px", background: colors.accentBlue }} />
           </div>
 
-          <h1 style={{ ...S.name, marginBottom: "2rem" }}>Joel</h1>
+          <h1 style={{ ...S.name, marginBottom: "2rem" }}>Betania</h1>
 
           <FloralDivider />
 
