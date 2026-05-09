@@ -14,87 +14,44 @@ function getTimeLeft() {
   };
 }
 
-// ─── Unidad ───────────────────────────────────────────────────────────────────
+// ─── Opción 3: Minimalista con línea inferior ─────────────────────────────────
 
-function Unit({ value, label }: { value: number; label: string }) {
+function Unit({ value, label, isLast }: { value: number; label: string; isLast: boolean }) {
   const display = String(value).padStart(2, "0");
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem" }}>
-      <div style={{
-        width:        "clamp(72px, 16vw, 110px)",
-        height:       "clamp(80px, 18vw, 120px)",
-        borderRadius: "8px",
-        background:   "linear-gradient(160deg, #3A5068 0%, #2C3D4F 100%)",
-        border:       "1px solid rgba(74,127,165,0.3)",
-        boxShadow:    "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
-        display:      "flex",
-        alignItems:   "center",
-        justifyContent: "center",
-        position:     "relative",
-        overflow:     "hidden",
-      }}>
-        {/* Línea divisoria */}
-        <div style={{
-          position:   "absolute",
-          top: "50%", left: "8px", right: "8px",
-          height:     "1px",
-          background: "rgba(0,0,0,0.35)",
-          zIndex:     2,
-        }} />
-        {/* Brillo */}
-        <div style={{
-          position:   "absolute",
-          inset: 0,
-          background: "linear-gradient(to bottom, rgba(255,255,255,0.05) 0%, transparent 50%)",
-          pointerEvents: "none",
-        }} />
-        <span style={{
-          fontFamily:    theme.fonts.display,
-          fontSize:      "clamp(2.2rem, 6vw, 3.5rem)",
-          color:         theme.colors.cream,
-          fontWeight:    400,
-          lineHeight:    1,
-          letterSpacing: "-0.02em",
-          zIndex:        3,
-          transition:    "opacity 0.2s ease",
-        }}>
-          {display}
-        </span>
-      </div>
-
-      <span style={{
-        fontFamily:    theme.fonts.sans,
-        fontSize:      "0.62rem",
-        color:         theme.colors.primary,
-        letterSpacing: "0.25em",
-        textTransform: "uppercase",
-      }}>
-        {label}
-      </span>
-    </div>
-  );
-}
-
-// ─── Separador ────────────────────────────────────────────────────────────────
-
-function Dot({ blink }: { blink: boolean }) {
   return (
     <div style={{
       display:       "flex",
       flexDirection: "column",
-      gap:           "8px",
-      paddingBottom: "1.8rem",
-      opacity:       blink ? 1 : 0.15,
-      transition:    "opacity 0.4s ease",
+      alignItems:    "center",
+      gap:           "0.4rem",
+      padding:       "0 clamp(1rem, 3vw, 2.5rem)",
+      borderRight:   isLast ? "none" : "1px solid rgba(74,127,165,0.15)",
     }}>
-      {[0, 1].map(i => (
-        <div key={i} style={{
-          width: "5px", height: "5px",
-          borderRadius: "50%",
-          background: theme.colors.primary,
-        }} />
-      ))}
+      <span style={{
+        fontFamily:    theme.fonts.display,
+        fontSize:      "clamp(2.8rem, 8vw, 5rem)",
+        color:         theme.colors.cream,
+        fontWeight:    400,
+        lineHeight:    1,
+        letterSpacing: "-0.03em",
+        transition:    "opacity 0.2s ease",
+      }}>
+        {display}
+      </span>
+
+      <div style={{ width: "100%", height: "1px", background: "rgba(74,127,165,0.3)" }} />
+
+      <span style={{
+        fontFamily:    theme.fonts.sans,
+        fontSize:      "0.58rem",
+        color:         theme.colors.primary,
+        letterSpacing: "0.3em",
+        textTransform: "uppercase",
+        marginTop:     "0.2rem",
+      }}>
+        {label}
+      </span>
     </div>
   );
 }
@@ -103,13 +60,9 @@ function Dot({ blink }: { blink: boolean }) {
 
 export function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
-  const [blink,    setBlink]    = useState(true);
 
   useEffect(() => {
-    const t = setInterval(() => {
-      setTimeLeft(getTimeLeft());
-      setBlink(v => !v);
-    }, 1000);
+    const t = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
     return () => clearInterval(t);
   }, []);
 
@@ -149,18 +102,21 @@ export function CountdownTimer() {
           Faltan para el gran día
         </h2>
 
+        {/* Sin gap — el padding interno de cada Unit hace el espaciado */}
         <div style={{
-          display: "flex", alignItems: "center",
+          display:        "flex",
+          alignItems:     "flex-start",
           justifyContent: "center",
-          gap: "clamp(0.5rem, 2vw, 1.5rem)",
-          flexWrap: "wrap",
-          animation: "fadeInUp 0.6s ease 0.2s both",
+          flexWrap:       "wrap",
+          animation:      "fadeInUp 0.6s ease 0.2s both",
         }}>
           {units.map((u, i) => (
-            <>
-              <Unit key={u.label} value={u.value} label={u.label} />
-              {i < units.length - 1 && <Dot key={`dot-${i}`} blink={blink} />}
-            </>
+            <Unit
+              key={u.label}
+              value={u.value}
+              label={u.label}
+              isLast={i === units.length - 1}
+            />
           ))}
         </div>
 
