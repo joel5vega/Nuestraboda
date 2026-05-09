@@ -31,10 +31,25 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle>(function MusicPlayer(_,
 
   const audioRef = useRef(new Audio(`${import.meta.env.BASE_URL}assets/dandelion.mp3`));
 const animFrameRef = useRef<number | null>(null);
+
 const startMusic = useCallback(async () => {
-  audioRef.current.loop = true;
-  audioRef.current.volume = 0.7;
-  await audioRef.current.play();
+  const audio = audioRef.current;
+  audio.loop   = true;
+  audio.volume = 0;
+  await audio.play();
+
+  const TARGET  = 0.5;
+  const STEP    = 0.01;
+  const TICK_MS = 150; // cada 150ms sube 0.01 → llega a 0.7 en ~10.5s
+
+  const fade = setInterval(() => {
+    if (audio.volume >= TARGET) {
+      audio.volume = TARGET;
+      clearInterval(fade);
+    } else {
+      audio.volume = Math.min(audio.volume + STEP, TARGET);
+    }
+  }, TICK_MS);
 }, []);
 
   useImperativeHandle(ref, () => ({

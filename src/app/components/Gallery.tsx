@@ -7,13 +7,16 @@ import loveAndServe from "../../assets/loveAndServe.jpg";
 import sajama     from "../../assets/sajama.jpg";
 import jiwasa     from "../../assets/jiwasa.png";
 import  theme  from "../../styles/theme";
+import hug from "../../assets/hug.jpeg";
+import blueandwhite from "../../assets/blueandwhite.jpg";
+
 
 const photos = [
   { src: hands,        alt: "Ceremonia al aire libre", size: "tall"   },
-  { src: lookAbove,    alt: "Los anillos",             size: "normal" },
+  { src: hug,    alt: "Los anillos",             size: "normal" },
   { src: jiwasa,       alt: "El lugar",                size: "normal" },
   { src: loveAndServe, alt: "La pareja",               size: "wide"   },
-  { src: sajama,       alt: "Decoración de mesa",      size: "normal" },
+  { src: blueandwhite,       alt: "Decoración de mesa",      size: "normal" },
   { src: hugBlack,     alt: "El baile",                size: "tall"   },
 ];
 
@@ -70,7 +73,6 @@ export function Gallery() {
 
         {/* Header */}
         <div className="text-center mb-16">
-          <p className="tracking-[0.4em] uppercase mb-3 text-xs" style={S.label}>✦ Galería ✦</p>
           <h2 style={S.heading}>Nuestros momentos</h2>
           <div className="flex items-center justify-center gap-3 mt-4">
             <div className="h-px w-16" style={{ background: `linear-gradient(to right, transparent, ${theme.colors.primary})` }} />

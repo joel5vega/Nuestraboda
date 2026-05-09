@@ -2,17 +2,21 @@ import { useEffect, useRef } from "react";
 import { colors, fonts, gradients } from "../../styles/theme";
 
 const scheduleItems = [
-  { time: "12:00 PM", event: "Llegada de los invitados",      desc: "Recibimiento en el jardín exterior",                icon: "✦"  },
-  { time: "1:00 PM",  event: "Ceremonia religiosa",           desc: "Unión sagrada ante Dios y sus seres queridos",      icon: "✝️" },
-  { time: "2:00 PM",  event: "Sesión de fotos",               desc: "Captura de los momentos más especiales",            icon: "◈"  },
-  { time: "3:30 PM",  event: "Palabras de agradecimiento",    desc: "Gracias por acompañarnos en este día tan especial", icon: "◇"  },
-  { time: "4:00 PM",  event: "Regalos",                       desc: "Gracias por sus regalos y presentes",               icon: "❦"  },
-  { time: "4:30 PM",  event: "Presentación de ministerios",   desc: "Oportunidades de servicio",                         icon: "◉"  },
-  { time: "5:00 PM",  event: "Palabra",                       desc: "Compartiendo la palabra de Dios",                   icon: "📖" },
-  { time: "5:30 PM",  event: "Vals y primer baile",           desc: "El momento más esperado",                           icon: "✿"  },
-  { time: "6:00 PM",  event: "Tiempo de danza",               desc: "A gozarnos delante del Señor",                      icon: "🎶" },
-  { time: "7:00 PM",  event: "Cena",                          desc: "Disfrutamos un delicioso banquete",                  icon: "🍽️" },
-  { time: "8:00 PM",  event: "Torta",                         desc: "Compartimos una rica torta",                        icon: "🎂" },
+  { time: "12:00 PM",  event: "Ceremonia religiosa",            desc: "Unión sagrada ante Dios y sus seres queridos",      icon: "✝️" },
+  // { time: "2:00 PM",  event: "Primer refrigerio",              desc: "Un momento para compartir y convivir",              icon: "✦"  },
+  // { time: "2:00 PM",  event: "Sesión de fotos",                desc: "Captura de los momentos más especiales",            icon: "◈"  },
+  { time: "3:00 PM",  event: "Vals de los recién casados",     desc: "El momento más esperado",                           icon: "✿"  },
+  // { time: "3:30 PM",  event: "Palabras de agradecimiento",     desc: "Gracias por acompañarnos en este día tan especial", icon: "◇"  },
+  // { time: "3:30 PM",  event: "1ra Recepción de regalos",       desc: "Gracias por sus regalos y presentes",               icon: "❦"  },
+  { time: "4:30 PM",  event: "Alabanza y adoración",           desc: "Tiempo de oración y alabanza al Señor",             icon: "◉"  },
+  { time: "5:00 PM",  event: "Tiempo de palabra",              desc: "Compartiendo la palabra de Dios",                   icon: "📖" },
+  { time: "6:00 PM",  event: "Tiempo de danza",                desc: "A gozarnos delante del Señor",                      icon: "🎶" },
+  // { time: "6:30 PM",  event: "Recepción de regalos",           desc: "Recepción de regalos durante la danza",             icon: "❦"  },
+  { time: "7:00 PM",  event: "Cena",                           desc: "Disfrutamos un delicioso banquete",                  icon: "🍽️" },
+  // { time: "7:00 PM",  event: "Especiales por ministerios",     desc: "Presentaciones del ministerio de evangelismo",      icon: "◉"  },
+  // { time: "8:00 PM",  event: "Dinámicas de solteros",          desc: "Momentos de diversión para los solteros",           icon: "✦"  },
+  { time: "8:00 PM",  event: "Torta",                          desc: "Compartimos una rica torta",                        icon: "🎂" },
+  { time: "8:30 PM",  event: "Despedida a los novios",         desc: "Hasta pronto y que Dios los bendiga",               icon: "✿"  },
 ];
 
 // ─── Estilos ─────────────────────────────────────────────────────────────────
