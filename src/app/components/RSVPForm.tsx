@@ -12,7 +12,7 @@ type FormData = {
 // ─── Estilos ─────────────────────────────────────────────────────────────────
 
 const S = {
-  section:   { background: `linear-gradient(to bottom, ${colors.bgDark}, ${colors.bgCard})`, padding: "5rem 1.5rem" },
+  section:   { background: `linear-gradient(to bottom, ${colors.bgDark}, ${colors.bgCard})`, padding: "1rem 1rem 5rem 1rem" },
   label:     { fontFamily: fonts.sans, fontSize: "0.7rem", letterSpacing: "0.45em", textTransform: "uppercase" as const, color: colors.accentBlue, marginBottom: "0.75rem" },
   heading:   { fontFamily: fonts.display, color: colors.textPrimary, fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 400, fontStyle: "italic" as const, margin: "0 0 0.5rem" },
   deadline:  { fontFamily: fonts.serif, fontStyle: "italic" as const, color: colors.accentBlue, fontSize: "0.95rem", opacity: 0.8 },
@@ -46,12 +46,40 @@ export function RSVPForm() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => { setLoading(false); setSubmitted(true); }, 1500);
-  };
+  
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
 
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbwPRR8OShetBXmXNtqgkgFnOveNJv550ib7NhkW_DL42m5uhcVDXWtaC2oJF1dHkbstQw/exec", {
+      method: "POST",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify({
+        name: form.name,
+        phone: form.phone,
+        attendance: form.attendance,
+        guests: form.attendance === "yes" ? form.guests : "No",
+        message: form.message,
+      }),
+    });
+
+    const result = await res.json();
+
+    if (result.ok) {
+      setSubmitted(true);
+    } else {
+      alert("Error al guardar: " + result.error);
+    }
+  } catch (error) {
+    alert("No se pudo enviar el formulario");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <>
       <style>{`
@@ -78,7 +106,6 @@ export function RSVPForm() {
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: "3rem", animation: "fadeInUp 0.6s ease both" }}>
-            <p style={S.label}>✦ Confirmación ✦</p>
             <h2 style={S.heading}>Confirma tu asistencia</h2>
             <p style={S.deadline}>Por favor confirma antes del <strong style={{ color: colors.accentBlue }}>15 de Julio, 2026</strong></p>
           </div>
@@ -189,17 +216,7 @@ export function RSVPForm() {
 )}
                   </div>
 
-                  {/* Mensaje */}
-                  <div>
-                    <label style={S.fieldLabel}>Mensaje para los novios</label>
-                    <textarea
-                      name="message" value={form.message}
-                      onChange={handleChange} rows={4}
-                      placeholder="Escríbeles algo especial..."
-                      style={{ ...S.input, resize: "vertical" }}
-                      onFocus={focusIn} onBlur={focusOut}
-                    />
-                  </div>
+                 
 
                   {/* Botón */}
                   <button type="submit" disabled={loading} className="rsvp-btn" style={S.btn}>

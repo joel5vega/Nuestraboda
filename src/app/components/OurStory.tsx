@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import coupleImage from "../../assets/pedida.jpg";
 import theme from "../../styles/theme";
 
 const milestones = [

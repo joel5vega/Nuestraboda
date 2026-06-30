@@ -86,28 +86,24 @@ const musicRef = useRef<MusicPlayerHandle>(null);
           <Wave fill={colors.bgLight} variant="curve" />
         </section>
 
-        {/* ── Story ─── bgCard → siguiente: bgLight */}
-        {/* <section id="story" style={{ position: "relative", background: colors.bgCard }}>
-          <OurStory />
-          <Wave fill={colors.bgLight} variant="curve" />
-        </section> */}
+  
 
         {/* ── Event ─── bgLight → siguiente: bgDark */}
         <section id="event" style={{ position: "relative", background: colors.bgLight }}>
           <EventDetails />
-          <Wave fill={colors.bgDark} variant="tilt-r" />
+          <Wave fill={colors.bgDark} variant="wave" />
         </section>
 
         {/* ── Schedule ─── bgDark → siguiente: bgLight */}
         <section id="schedule" style={{ position: "relative", background: colors.bgDark }}>
           <Schedule />
-          <Wave fill={colors.bgLight} variant="wave" />
+          <Wave fill={colors.bgLight} variant="curve" />
         </section>
 
         {/* ── Gallery ─── bgLight → siguiente: bgDark */}
         <section id="gallery" style={{ position: "relative", background: colors.bgLight }}>
           <Gallery />
-          <Wave fill={colors.bgDark} variant="curve" />
+          <Wave fill={colors.bgDark} variant="wave" />
         </section>
 
         {/* ── RSVP ─── bgDark → siguiente: Footer bgLight */}

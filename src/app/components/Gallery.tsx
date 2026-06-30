@@ -14,8 +14,6 @@ import blueandwhite from "../../assets/blueandwhite.jpg";
 const photos = [
   { src: hands,        alt: "Ceremonia al aire libre", size: "tall"   },
   { src: hug,    alt: "Los anillos",             size: "normal" },
-  { src: jiwasa,       alt: "El lugar",                size: "normal" },
-  { src: loveAndServe, alt: "La pareja",               size: "wide"   },
   { src: blueandwhite,       alt: "Decoración de mesa",      size: "normal" },
   { src: hugBlack,     alt: "El baile",                size: "tall"   },
 ];
@@ -23,7 +21,7 @@ const photos = [
 // ─── Estilos ────────────────────────────────────────────────────────────────
 
 const S = {
-  section:      { background: theme.colors.cream },
+  section:      { background: theme.colors.cream ,padding: "1rem 1rem 4.5rem 1rem" },
   label:        { color: theme.leaf,            fontFamily: theme.fonts.sans,    letterSpacing: "0.4em" },
   heading:      { fontFamily: theme.fonts.display, color: theme.colors.dark + "1)", fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 400 },
   card:         { boxShadow: `0 4px 16px rgba(44,61,79,0.15)`, border: `1px solid rgba(74,127,165,0.15)` },

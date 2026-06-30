@@ -96,7 +96,7 @@ const icons: Record<string, JSX.Element> = {
 // ─── Styles ──────────────────────────────────────────────────────────────────
 
 const S = {
-  section: { padding: "5rem 1.5rem" },
+  section: { padding: "0rem 1rem 3.5rem 1rem" },
   heading: {
     fontFamily: fonts.display,
     color: colors.textPrimary,
@@ -149,13 +149,8 @@ export function Schedule() {
       <div style={{ maxWidth: "720px", margin: "0 auto" }}>
 
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
-          <p style={{
-            fontFamily: fonts.sans, fontSize: "0.68rem", letterSpacing: "0.45em",
-            textTransform: "uppercase", color: colors.accentTeal, marginBottom: "0.6rem",
-          }}>
-            Programa
-          </p>
+        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+          
           <h2 style={S.heading}>El día en detalle</h2>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center",
             gap: "0.75rem", marginTop: "1rem" }}>

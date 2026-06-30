@@ -1,129 +1,191 @@
 import { useEffect, useRef } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import theme, { colors, fonts, gradients, shadows, dressPalette } from "../../styles/theme";
+import { colors, fonts, gradients, shadows } from "../../styles/theme";
 import venueImage from "../../assets/jiwasa.png";
-// const venueImage = "https://images.unsplash.com/photo-1586880043376-2b7bd270cd4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080";
 
 // ─── Íconos ──────────────────────────────────────────────────────────────────
 
 const MapPinIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M8 1C5.24 1 3 3.24 3 6C3 9.5 8 15 8 15C8 15 13 9.5 13 6C13 3.24 10.76 1 8 1Z"
-      stroke={colors.accentBlue} strokeWidth="1.3"/>
-    <circle cx="8" cy="6" r="2" stroke={colors.accentBlue} strokeWidth="1.3"/>
+    <path
+      d="M8 1C5.24 1 3 3.24 3 6C3 9.5 8 15 8 15C8 15 13 9.5 13 6C13 3.24 10.76 1 8 1Z"
+      stroke={colors.accentBlue}
+      strokeWidth="1.3"
+    />
+    <circle cx="8" cy="6" r="2" stroke={colors.accentBlue} strokeWidth="1.3" />
   </svg>
 );
 
 const ClockIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="8" r="6.5" stroke={colors.accentBlue} strokeWidth="1.3"/>
-    <path d="M8 4.5V8L10.5 10" stroke={colors.accentBlue} strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const DressIcon = () => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-    <path d="M10 4C10 4 8 8 6 10C4 12 2 13 2 13L7 16L6 28H22L21 16L26 13C26 13 24 12 22 10C20 8 18 4 18 4"
-      stroke={colors.accentBlue} strokeWidth="1.5" strokeLinejoin="round"/>
-    <path d="M10 4H18" stroke={colors.accentBlue} strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M14 4V9" stroke={colors.accentBlue} strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="8" cy="8" r="6.5" stroke={colors.accentBlue} strokeWidth="1.3" />
+    <path
+      d="M8 4.5V8L10.5 10"
+      stroke={colors.accentBlue}
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 // ─── Estilos ─────────────────────────────────────────────────────────────────
 
 const S = {
-  section:    { background: colors.bgLight, padding: "5rem 1.5rem" },
-  label:      { color: colors.accentTeal, fontFamily: fonts.sans, fontSize: "0.7rem", letterSpacing: "0.45em", textTransform: "uppercase" as const, marginBottom: "0.75rem" },
-  heading:    { fontFamily: fonts.display, color: colors.bgCard, fontSize: "clamp(1.8rem, 4vw, 2.8rem)", fontWeight: 400, fontStyle: "italic" as const, marginBottom: "3rem" },
-  card:       { background: colors.bgWhite, borderRadius: "6px", overflow: "hidden" as const, boxShadow: shadows.card, border: `1px solid ${colors.borderLight}` },
-  cardLabel:  { fontFamily: fonts.sans, fontSize: "0.65rem", letterSpacing: "0.35em", textTransform: "uppercase" as const, color: colors.accentBlue, marginBottom: "0.5rem" },
-  venueName:  { fontFamily: fonts.display, color: colors.bgCard, fontSize: "clamp(1.6rem, 4vw, 2.2rem)", fontWeight: 400, margin: "0.25rem 0 1.25rem" },
-  infoRow:    { display: "flex", alignItems: "center", gap: "0.5rem" },
-  infoText:   { fontFamily: fonts.sans, fontSize: "0.85rem", color: colors.textMid, lineHeight: 1.5 },
-  note:       { fontFamily: fonts.serif, fontStyle: "italic" as const, color: colors.textMuted, fontSize: "0.95rem", lineHeight: 1.7, borderLeft: `2px solid ${colors.accentTeal}`, paddingLeft: "1rem", opacity: 0.9 },
-  mapLink:    { display: "inline-flex" as const, alignItems: "center", gap: "0.4rem", fontFamily: fonts.sans, fontSize: "0.75rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: colors.accentTeal, textDecoration: "none", borderBottom: `1px solid ${colors.accentTeal}`, paddingBottom: "2px" },
-  dressCard:  { background: gradients.cardDress, borderRadius: "6px", padding: "2.5rem", textAlign: "center" as const, border: `1px solid ${colors.border}` },
-  dressTitle: { fontFamily: fonts.display, color: colors.textPrimary, fontSize: "clamp(1.3rem, 3vw, 1.8rem)", fontWeight: 400, fontStyle: "italic" as const, margin: "0.75rem 0 0.5rem" },
-  dressNote:  { fontFamily: fonts.serif, fontStyle: "italic" as const, color: colors.accentBlue, fontSize: "0.95rem", marginTop: "0.75rem" },
+  section: {
+    background: colors.bgLight,
+    padding: "1rem 1rem 5rem 1rem",
+  },
+  heading: {
+    fontFamily: fonts.display,
+    color: colors.bgCard,
+    fontSize: "clamp(1.8rem, 4vw, 2.5rem)",
+    fontWeight: 400,
+    fontStyle: "italic" as const,
+    marginBottom: "2rem",
+    textAlign: "center" as const,
+  },
+  card: {
+    background: colors.bgWhite,
+    borderRadius: "4px",
+    overflow: "hidden" as const,
+    boxShadow: "0 4px 18px rgba(28,42,58,0.08)",
+    border: `1px solid ${colors.borderLight}`,
+  },
+  imageWrap: {
+    position: "relative" as const,
+    height: "160px",
+    overflow: "hidden",
+  },
+  cardBody: {
+    padding: "1.25rem 1.25rem 1.5rem",
+  },
+  cardLabel: {
+    fontFamily: fonts.sans,
+    fontSize: "0.65rem",
+    letterSpacing: "0.32em",
+    textTransform: "uppercase" as const,
+    color: colors.accentTeal,
+    marginBottom: "0.5rem",
+  },
+  venueName: {
+    fontFamily: fonts.display,
+    color: colors.bgCard,
+    fontSize: "clamp(1.5rem, 3vw, 2rem)",
+    fontWeight: 400,
+    margin: "0 0 1rem",
+  },
+  infoList: {
+    display: "grid",
+    gap: "0.75rem",
+    marginBottom: "1.25rem",
+  },
+  infoRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.6rem",
+  },
+  infoText: {
+    fontFamily: fonts.sans,
+    fontSize: "0.9rem",
+    color: colors.textMid,
+    lineHeight: 1.5,
+  },
+  note: {
+    fontFamily: fonts.serif,
+    fontStyle: "italic" as const,
+    color: colors.textMuted,
+    fontSize: "0.92rem",
+    lineHeight: 1.65,
+    borderLeft: `2px solid ${colors.accentTeal}`,
+    paddingLeft: "0.85rem",
+    marginBottom: "1.25rem",
+    opacity: 0.9,
+  },
+  mapLink: {
+    display: "inline-flex" as const,
+    alignItems: "center",
+    gap: "0.45rem",
+    fontFamily: fonts.sans,
+    fontSize: "0.75rem",
+    letterSpacing: "0.18em",
+    textTransform: "uppercase" as const,
+    color: colors.accentTeal,
+    textDecoration: "none",
+    borderBottom: `1px solid ${colors.accentTeal}`,
+    paddingBottom: "2px",
+  },
 } as const;
 
-// ─── Reveal style reutilizable ────────────────────────────────────────────────
+// ─── Reveal ──────────────────────────────────────────────────────────────────
 
 const revealStyle: React.CSSProperties = {
-  opacity:   0,
-  transform: "translateY(28px)",
-  transition:"opacity 0.7s ease, transform 0.7s ease",
+  opacity: 0,
+  transform: "translateY(20px)",
+  transition: "opacity 0.65s ease, transform 0.65s ease",
 };
 
 // ─── Componente ──────────────────────────────────────────────────────────────
 
 export function EventDetails() {
-  const cardRef  = useRef<HTMLDivElement>(null);
-  const dressRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) {
-          (e.target as HTMLElement).style.opacity   = "1";
-          (e.target as HTMLElement).style.transform = "translateY(0)";
-          observer.unobserve(e.target);
-        }
-      }),
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).style.opacity = "1";
+            (e.target as HTMLElement).style.transform = "translateY(0)";
+            observer.unobserve(e.target);
+          }
+        }),
       { threshold: 0.15 }
     );
-    [cardRef, dressRef].forEach(r => r.current && observer.observe(r.current));
+
+    if (cardRef.current) observer.observe(cardRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
     <section style={S.section}>
-      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+        <h2 style={S.heading}>Acompáñanos en este día especial</h2>
 
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-          <h2 style={S.heading}>Acompáñanos en este día especial</h2>
-        </div>
-
-        {/* ── Card Venue ──────────────────────────────────────────────── */}
-        <div ref={cardRef} style={{ ...S.card, ...revealStyle, marginBottom: "2rem" }}>
-
-          {/* Imagen */}
-          <div style={{ position: "relative", height: "260px", overflow: "hidden" }}>
+        <div ref={cardRef} style={{ ...S.card, ...revealStyle }}>
+          <div style={S.imageWrap}>
             <ImageWithFallback
               src={venueImage}
               alt="Jiwasa - Achocalla"
               className="w-full h-full object-cover"
             />
-            <div style={{ position: "absolute", inset: 0, background: gradients.imageOverlay }} />
-            <div style={{
-              position: "absolute", bottom: "1.5rem", left: "1.5rem",
-              background: "rgba(28,42,58,0.75)", backdropFilter: "blur(8px)",
-              borderRadius: "4px", padding: "0.5rem 1rem",
-              border: `1px solid rgba(143,175,194,0.25)`,
-            }}>
-              <p style={{ ...S.cardLabel, marginBottom: 0 }}>Ceremonia &amp; Recepción</p>
-            </div>
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: gradients.imageOverlay,
+              }}
+            />
           </div>
 
-          {/* Info */}
-          <div style={{ padding: "2rem 2.5rem 2.5rem" }}>
+          <div style={S.cardBody}>
+            <p style={S.cardLabel}>Ceremonia &amp; Recepción</p>
             <h3 style={S.venueName}>Jiwasa</h3>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "1.25rem", marginBottom: "1.5rem" }}>
+            <div style={S.infoList}>
               <div style={S.infoRow}>
                 <ClockIcon />
-                <span style={S.infoText}>12:00 PM · Sábado, 1 de agosto, 2026</span>
+                <span style={S.infoText}>12:00 PM · 1 de agosto de 2026</span>
               </div>
+
               <div style={S.infoRow}>
                 <MapPinIcon />
-                <span style={S.infoText}>Carretera El Alto - Mallasilla, Achocalla, La Paz</span>
+                <span style={S.infoText}>Carretera El Alto - Mallasilla, Achocalla</span>
               </div>
             </div>
 
-            <p style={{ ...S.note, marginBottom: "1.75rem" }}>
-              Les pedimos llegar 15 minutos antes de la hora indicada para que todos estemos listos para este momento tan especial.
+            <p style={S.note}>
+              Les pedimos llegar 15 minutos antes para comenzar puntualmente este momento tan especial.
             </p>
 
             <a
@@ -137,32 +199,6 @@ export function EventDetails() {
             </a>
           </div>
         </div>
-
-        {/* ── Card Dress Code ─────────────────────────────────────────── */}
-        {/* <div ref={dressRef} style={{ ...S.dressCard, ...revealStyle, transitionDelay: "0.15s" }}>
-          <DressIcon />
-          <p style={{ ...S.cardLabel, color: colors.accentBlue, marginTop: "0.75rem" }}>Código de Vestimenta</p>
-          <h3 style={S.dressTitle}>Formal Elegante</h3>
-
-          <div style={{ display: "flex", justifyContent: "center", gap: "0.75rem", margin: "1.25rem 0", flexWrap: "wrap" }}>
-            {dressPalette.map((p) => (
-              <div key={p.color} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem" }}>
-                <div style={{
-                  width: "36px", height: "36px", borderRadius: "50%",
-                  background: p.color,
-                  border: "2px solid rgba(255,255,255,0.15)",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
-                }} />
-                <span style={{ fontFamily: fonts.sans, fontSize: "0.6rem", color: colors.accentBlue, letterSpacing: "0.1em" }}>
-                  {p.label}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <p style={S.dressNote}>"Tonos tierra y pasteles que abracen la naturaleza de Jiwasa"</p>
-        </div> */}
-
       </div>
     </section>
   );
