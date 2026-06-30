@@ -176,7 +176,7 @@ export function HeroSection({ animate }: Props) {
           <FloralDivider />
 
           <div style={{ marginTop: "1.5rem", marginBottom: "1rem" }}>
-            <p style={S.date}>SÁBADO · 1 DE AGOSTO, 2026</p>
+            <p style={S.date}>1 DE AGOSTO, 2026</p>
           </div>
 
           <p style={S.location}>JIWASA · ACHOCALLA</p>
