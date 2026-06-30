@@ -161,9 +161,9 @@ export function HeroSection({ animate }: Props) {
             transform: "translateY(24px)",
           }}
         >
-          <p style={{ ...S.label, marginBottom: "1.5rem" }}>✦ Juntos por siempre ✦</p>
+          <p style={{ ...S.label, marginBottom: "1.5rem" }}>Una nueva historia comienza</p>
 
-          <h1 style={S.name}>Joel</h1>
+          <h1 style={S.name}>Joel Pablo</h1>
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", margin: "0.5rem 0" }}>
             <div style={{ height: "1px", width: "60px", background: colors.accentBlue }} />
@@ -179,7 +179,7 @@ export function HeroSection({ animate }: Props) {
             <p style={S.date}>SÁBADO · 1 DE AGOSTO, 2026</p>
           </div>
 
-          <p style={S.location}>JIWASA · ACHOCHALLA</p>
+          <p style={S.location}>JIWASA · ACHOCALLA</p>
 
           {/* Scroll indicator — aparece después de que termina la intro */}
           <div style={{

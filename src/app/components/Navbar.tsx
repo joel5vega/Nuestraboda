@@ -130,7 +130,7 @@ export function Navbar() {
           transition: "opacity 0.4s ease 0.05s, transform 0.4s ease 0.05s",
           pointerEvents: scrolled ? "auto" : "none",
           // Ocultar en mobile
-          display: "none",
+          // display: "none",
         }}
           className="desktop-nav"
         >
@@ -194,7 +194,6 @@ export function Navbar() {
             // Solo desktop
             display: "none",
           }}
-          className="desktop-cta"
         >
           Confirmar
         </button>

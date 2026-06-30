@@ -82,8 +82,7 @@ export function EventDetails() {
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
 
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <p style={S.label}>✦ Detalles del Evento ✦</p>
+        <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <h2 style={S.heading}>Acompáñanos en este día especial</h2>
         </div>
 

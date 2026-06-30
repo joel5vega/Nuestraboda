@@ -82,16 +82,9 @@ export function CountdownTimer() {
         }
       `}</style>
 
-      <section style={{ padding: "5rem 1.5rem", textAlign: "center" }}>
+      <section style={{ padding: "1rem 1rem 5rem 1rem", textAlign: "center" }}>
 
-        <p style={{
-          color: theme.colors.primary, fontFamily: theme.fonts.sans,
-          fontSize: "0.7rem", letterSpacing: "0.45em",
-          textTransform: "uppercase", marginBottom: "0.75rem",
-          animation: "fadeInUp 0.6s ease both",
-        }}>
-          ✦ Cuenta Regresiva ✦
-        </p>
+      
 
         <h2 style={{
           fontFamily: theme.fonts.display, color: theme.colors.cream,
