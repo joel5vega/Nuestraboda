@@ -1,17 +1,19 @@
 import { useEffect, useRef } from "react";
 import { colors, fonts, gradients } from "../../styles/theme";
+import { FaBookOpen, FaUtensils, FaCarSide, FaHandsPraying } from "react-icons/fa6";
+import { GiBigDiamondRing, GiMusicalNotes, GiPrayerBeads, GiCakeSlice } from "react-icons/gi";
+import type { IconType } from "react-icons";
 
-const scheduleItems = [
-  { time: "12:00 PM", event: "Ceremonia",             icon: "rings"    },
-  { time: "3:00 PM",  event: "Vals",                  icon: "dance"    },
-  { time: "4:30 PM",  event: "Alabanza y adoración",  icon: "worship"  },
-  { time: "5:00 PM",  event: "Palabra",               icon: "bible"    },
-  { time: "6:00 PM",  event: "Danza",                 icon: "ballet"   },
-  { time: "7:00 PM",  event: "Cena",                  icon: "dinner"   },
-  { time: "8:00 PM",  event: "Torta",                 icon: "cake"     },
-  { time: "8:30 PM",  event: "Despedida",             icon: "car"      },
+const scheduleItems: { time: string; event: string; Icon: IconType }[] = [
+  { time: "12:00 PM", event: "Ceremonia",            Icon: GiBigDiamondRing },
+  { time: "3:00 PM",  event: "Vals",                 Icon: GiMusicalNotes    },
+  { time: "4:30 PM",  event: "Alabanza y adoración", Icon: FaHandsPraying    },
+  { time: "5:00 PM",  event: "Palabra",              Icon: FaBookOpen        },
+  { time: "6:00 PM",  event: "Danza",                Icon: GiPrayerBeads     },
+  { time: "7:00 PM",  event: "Cena",                 Icon: FaUtensils        },
+  { time: "8:00 PM",  event: "Torta",                Icon: GiCakeSlice       },
+  { time: "8:30 PM",  event: "Despedida",            Icon: FaCarSide         },
 ];
-
 // ─── SVG Icons — line-art minimalista ────────────────────────────────────────
 
 const icons: Record<string, JSX.Element> = {
@@ -204,7 +206,7 @@ export function Schedule() {
                       display: "flex", alignItems: "center", justifyContent: "center",
                       color: colors.accentTeal, flexShrink: 0,
                     }}>
-                      {icons[item.icon]}
+                      <item.Icon size={18} color={colors.accentTeal} />
                     </div>
                   </div>
 
