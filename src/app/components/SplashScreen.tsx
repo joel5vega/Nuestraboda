@@ -8,18 +8,30 @@ type Phase =
   | "content-reveal"
   | "exiting";
 
-const rustic = {
-  bg: "#263127",
-  bgGlow: "rgba(196,168,120,0.10)",
-  paper: "#F4EBDD",
-  paperEdge: "#E7D8C2",
-  olive: "#5E6B4A",
-  oliveDark: "#445038",
-  ink: "#2F3A2C",
-  muted: "#6E6A5E",
-  gold: "#A88452",
-  envelope: "#CDB89A",
-  envelopeDark: "#B79F81",
+const palette = {
+  bg: "#10305a",
+  bgGlow: "rgba(126, 146, 174, 0.16)",
+
+  paper: "#F7F1EC",
+  paperEdge: "#E8DDD3",
+
+  dustyBlue: "#7E92AE",
+  dustyBlueDeep: "#5F7390",
+
+  dustyRose: "#B88D90",
+  dustyRoseSoft: "#D8BEC3",
+
+  frenchBlue: "#3F6FB6",
+  navy: "#1F2F4A",
+
+  ink: "#4B4A52",
+  muted: "#8D847E",
+
+  champagne: "#B79A6A",
+  envelope: "#D9C7BA",
+  envelopeDeep: "#BFA99A",
+
+  mist: "#E6E1E7",
 };
 
 const AnimatedName = ({ name, delay = 0 }: { name: string; delay?: number }) => (
@@ -110,9 +122,9 @@ export function SplashScreen({
           opacity: phase === "exiting" ? 0 : 1,
           transition: "opacity 0.7s ease",
           background: `
-            radial-gradient(circle at 50% 35%, ${rustic.bgGlow}, transparent 42%),
-            linear-gradient(180deg, #2C372D 0%, ${rustic.bg} 100%)
-          `,
+  radial-gradient(circle at 50% 32%, ${palette.bgGlow}, transparent 42%),
+  linear-gradient(180deg, ${palette.bg} 0%, ${palette.bg} 100%)
+`,
         }}
       >
         {[...Array(8)].map((_, i) => (
@@ -123,7 +135,7 @@ export function SplashScreen({
               width: "3px",
               height: "3px",
               borderRadius: "50%",
-              background: rustic.gold,
+              background: i % 2 === 0 ? palette.champagne : palette.dustyRoseSoft,
               top: `${12 + i * 10}%`,
               left: i % 2 === 0 ? `${7 + i * 3.5}%` : `${90 - i * 3.5}%`,
               animation: `pulseSoft ${2.4 + i * 0.2}s ease-in-out ${i * 0.2}s infinite`,
@@ -135,7 +147,7 @@ export function SplashScreen({
           style={{
             position: "absolute",
             inset: "1.5rem",
-            border: `1px solid rgba(244,235,221,0.12)`,
+            border: `1px solid rgba(184, 141, 144, 0.18)`,
             opacity: 0.9,
             pointerEvents: "none",
           }}
@@ -156,8 +168,8 @@ export function SplashScreen({
             style={{
               position: "absolute",
               zIndex: 10,
-              background: `linear-gradient(180deg, ${rustic.paper} 0%, ${rustic.paperEdge} 100%)`,
-              border: `1px solid rgba(168,132,82,0.18)`,
+              background: `linear-gradient(180deg, ${palette.paper} 0%, ${palette.paperEdge} 100%)`,
+              border: `1px solid rgba(183, 154, 106, 0.20)`,
               borderRadius: "4px",
               display: "flex",
               flexDirection: "column",
@@ -186,7 +198,7 @@ export function SplashScreen({
                   ? 0
                   : 1,
               boxShadow: isExpanded
-                ? "0 30px 90px rgba(0,0,0,0.34), inset 0 0 0 1px rgba(255,255,255,0.35)"
+                ? "0 30px 90px rgba(63, 48, 58, 0.22), inset 0 0 0 1px rgba(255,255,255,0.35)"
                 : "none",
             }}
           >
@@ -206,8 +218,8 @@ export function SplashScreen({
                   style={{
                     position: "absolute",
                     inset: "1.35rem",
-                    border: `1px solid rgba(94,107,74,0.18)`,
-                    opacity: 0.45,
+                    border: `1px solid rgba(126, 146, 174, 0.20)`,
+                    opacity: 0.5,
                     pointerEvents: "none",
                     borderRadius: "2px",
                   }}
@@ -218,7 +230,7 @@ export function SplashScreen({
                     style={{
                       fontFamily: `"Eyesome Script", "Cormorant Garamond", serif`,
                       fontSize: "clamp(3rem, 11vw, 5.7rem)",
-                      color: rustic.ink,
+                      color: palette.ink,
                       fontWeight: 400,
                       lineHeight: 1.04,
                       letterSpacing: "0.01em",
@@ -245,15 +257,15 @@ export function SplashScreen({
                       style={{
                         height: "1px",
                         width: "42px",
-                        background: `linear-gradient(to right, transparent, ${rustic.olive})`,
-                        opacity: 0.6,
+                        background: `linear-gradient(to right, transparent, ${palette.dustyBlue})`,
+                        opacity: 0.7,
                       }}
                     />
                     <span
                       style={{
                         fontFamily: `"Cormorant Garamond", serif`,
                         fontSize: "clamp(1.5rem, 4vw, 2.2rem)",
-                        color: rustic.olive,
+                        color: palette.dustyRose,
                         fontStyle: "italic",
                         lineHeight: 1,
                       }}
@@ -264,8 +276,8 @@ export function SplashScreen({
                       style={{
                         height: "1px",
                         width: "42px",
-                        background: `linear-gradient(to left, transparent, ${rustic.olive})`,
-                        opacity: 0.6,
+                        background: `linear-gradient(to left, transparent, ${palette.dustyBlue})`,
+                        opacity: 0.7,
                       }}
                     />
                   </div>
@@ -274,7 +286,7 @@ export function SplashScreen({
                     style={{
                       fontFamily: `"Eyesome Script", "Cormorant Garamond", serif`,
                       fontSize: "clamp(3rem, 11vw, 5.7rem)",
-                      color: rustic.ink,
+                      color: palette.ink,
                       fontWeight: 400,
                       lineHeight: 1.04,
                       letterSpacing: "0.01em",
@@ -302,20 +314,20 @@ export function SplashScreen({
                     style={{
                       height: "1px",
                       width: "50px",
-                      background: `linear-gradient(to right, transparent, ${rustic.gold})`,
+                      background: `linear-gradient(to right, transparent, ${palette.champagne})`,
                     }}
                   />
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M7 1C7 1 4.5 4 4.5 6C4.5 7.4 5.6 8.5 7 8.5C8.4 8.5 9.5 7.4 9.5 6C9.5 4 7 1 7 1Z" fill={rustic.gold} opacity="0.8" />
-                    <path d="M7 8.5V13" stroke={rustic.gold} strokeWidth="0.8" opacity="0.55" />
-                    <path d="M1 7C1 7 4 4.5 6 4.5C7.4 4.5 8.5 5.6 8.5 7C8.5 8.4 7.4 9.5 6 9.5C4 9.5 1 7 1 7Z" fill={rustic.gold} opacity="0.42" />
-                    <path d="M13 7C13 7 10 4.5 8 4.5" stroke={rustic.gold} strokeWidth="0.8" opacity="0.42" />
+                    <path d="M7 1C7 1 4.5 4 4.5 6C4.5 7.4 5.6 8.5 7 8.5C8.4 8.5 9.5 7.4 9.5 6C9.5 4 7 1 7 1Z" fill={palette.champagne} opacity="0.8" />
+                    <path d="M7 8.5V13" stroke={palette.champagne} strokeWidth="0.8" opacity="0.55" />
+                    <path d="M1 7C1 7 4 4.5 6 4.5C7.4 4.5 8.5 5.6 8.5 7C8.5 8.4 7.4 9.5 6 9.5C4 9.5 1 7 1 7Z" fill={palette.champagne} opacity="0.42" />
+                    <path d="M13 7C13 7 10 4.5 8 4.5" stroke={palette.champagne} strokeWidth="0.8" opacity="0.42" />
                   </svg>
                   <div
                     style={{
                       height: "1px",
                       width: "50px",
-                      background: `linear-gradient(to left, transparent, ${rustic.gold})`,
+                      background: `linear-gradient(to left, transparent, ${palette.champagne})`,
                     }}
                   />
                 </div>
@@ -323,7 +335,7 @@ export function SplashScreen({
                 <p
                   style={{
                     fontFamily: `"Cormorant Garamond", serif`,
-                    color: rustic.muted,
+                    color: palette.muted,
                     fontSize: "clamp(0.9rem, 2vw, 1.05rem)",
                     letterSpacing: "0.22em",
                     marginBottom: "2.4rem",
@@ -331,7 +343,7 @@ export function SplashScreen({
                     animation: "fadeIn 0.8s ease 1.45s forwards",
                   }}
                 >
-                  1 DE AGOSTO, 2026 · <br></br>JIWASA, ACHOCHALLA
+                  1 DE AGOSTO, 2026 · <br />JIWASA, ACHOCHALLA
                 </p>
 
                 <div
@@ -346,10 +358,10 @@ export function SplashScreen({
                 >
                   <div style={{ position: "relative", padding: "6px" }}>
                     {[
-                      { top: 0, left: 0, borderTop: `1px solid ${rustic.olive}`, borderLeft: `1px solid ${rustic.olive}` },
-                      { top: 0, right: 0, borderTop: `1px solid ${rustic.olive}`, borderRight: `1px solid ${rustic.olive}` },
-                      { bottom: 0, left: 0, borderBottom: `1px solid ${rustic.olive}`, borderLeft: `1px solid ${rustic.olive}` },
-                      { bottom: 0, right: 0, borderBottom: `1px solid ${rustic.olive}`, borderRight: `1px solid ${rustic.olive}` },
+                      { top: 0, left: 0, borderTop: `1px solid ${palette.dustyBlue}`, borderLeft: `1px solid ${palette.dustyBlue}` },
+                      { top: 0, right: 0, borderTop: `1px solid ${palette.dustyBlue}`, borderRight: `1px solid ${palette.dustyBlue}` },
+                      { bottom: 0, left: 0, borderBottom: `1px solid ${palette.dustyBlue}`, borderLeft: `1px solid ${palette.dustyBlue}` },
+                      { bottom: 0, right: 0, borderBottom: `1px solid ${palette.dustyBlue}`, borderRight: `1px solid ${palette.dustyBlue}` },
                     ].map((corner, i) => (
                       <div
                         key={i}
@@ -366,18 +378,20 @@ export function SplashScreen({
                     <button
                       style={{
                         padding: "0.78rem 2.6rem",
-                        border: `1px solid ${rustic.olive}`,
-                        background: btnHover ? rustic.olive : "rgba(255,255,255,0.18)",
-                        color: btnHover ? rustic.paper : rustic.oliveDark,
+                        border: `1px solid ${btnHover ? palette.frenchBlue : palette.dustyBlue}`,
+                        background: btnHover
+                          ? `linear-gradient(135deg, ${palette.frenchBlue} 0%, ${palette.navy} 100%)`
+                          : "rgba(255,255,255,0.22)",
+                        color: btnHover ? palette.paper : palette.navy,
                         fontFamily: `"Inter", sans-serif`,
                         fontSize: "0.72rem",
                         letterSpacing: "0.28em",
                         textTransform: "uppercase",
                         cursor: "pointer",
                         transition:
-                          "background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease",
+                          "background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease, border-color 0.3s ease",
                         transform: btnHover ? "translateY(-1px) scale(1.02)" : "scale(1)",
-                        boxShadow: btnHover ? `0 6px 18px rgba(94,107,74,0.18)` : "none",
+                        boxShadow: btnHover ? "0 8px 22px rgba(63, 111, 182, 0.22)" : "none",
                         animation: "fadeIn 0.5s ease 2.15s forwards, softBreath 3.2s ease 2.8s infinite",
                         display: "block",
                       }}
@@ -410,10 +424,10 @@ export function SplashScreen({
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: `linear-gradient(145deg, ${rustic.envelope} 0%, ${rustic.envelopeDark} 100%)`,
+                  background: `linear-gradient(145deg, ${palette.envelope} 0%, ${palette.envelopeDeep} 100%)`,
                   borderRadius: "4px",
                   boxShadow:
-                    "0 20px 60px rgba(0,0,0,0.42), 0 4px 16px rgba(0,0,0,0.22)",
+                    "0 20px 60px rgba(89, 73, 82, 0.24), 0 4px 16px rgba(89, 73, 82, 0.16)",
                   overflow: "hidden",
                 }}
               >
@@ -422,7 +436,7 @@ export function SplashScreen({
                     position: "absolute",
                     inset: 0,
                     background:
-                      "linear-gradient(to bottom right, rgba(0,0,0,0.08) 50%, transparent 50%)",
+                      "linear-gradient(to bottom right, rgba(255,255,255,0.08) 50%, transparent 50%)",
                   }}
                 />
                 <div
@@ -430,7 +444,7 @@ export function SplashScreen({
                     position: "absolute",
                     inset: 0,
                     background:
-                      "linear-gradient(to bottom left, rgba(0,0,0,0.08) 50%, transparent 50%)",
+                      "linear-gradient(to bottom left, rgba(0,0,0,0.05) 50%, transparent 50%)",
                   }}
                 />
                 <div
@@ -441,8 +455,8 @@ export function SplashScreen({
                     transform: "translateX(-50%)",
                     fontFamily: `"Cormorant Garamond", serif`,
                     fontSize: "1rem",
-                    color: rustic.olive,
-                    opacity: 0.72,
+                    color: palette.dustyBlueDeep,
+                    opacity: 0.8,
                     fontStyle: "italic",
                     whiteSpace: "nowrap",
                   }}
@@ -473,8 +487,8 @@ export function SplashScreen({
                     height: 0,
                     borderLeft: "130px solid transparent",
                     borderRight: "130px solid transparent",
-                    borderTop: `90px solid #B69D7F`,
-                    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.16))",
+                    borderTop: `90px solid ${palette.envelopeDeep}`,
+                    filter: "drop-shadow(0 2px 4px rgba(89,73,82,0.12))",
                   }}
                 />
               </div>

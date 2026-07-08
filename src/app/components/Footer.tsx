@@ -69,7 +69,7 @@ export function Footer() {
           from { opacity: 0; transform: translateY(18px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        .footer-link:hover { color: ${colors.accentTealDim}; border-bottom-color: ${colors.accentTealDim}; }
+        .footer-link:hover { color: ${colors.accentTealDim}; }
       `}</style>
 
       <footer style={S.footer} role="contentinfo">

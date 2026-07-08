@@ -12,10 +12,13 @@ import blueandwhite from "../../assets/blueandwhite.jpg";
 
 
 const photos = [
-  { src: hands,        alt: "Ceremonia al aire libre", size: "tall"   },
   { src: hug,    alt: "Los anillos",             size: "normal" },
+  { src: hands,        alt: "Ceremonia al aire libre", size: "tall"   },
+  
+
   { src: blueandwhite,       alt: "Decoración de mesa",      size: "normal" },
-  { src: hugBlack,     alt: "El baile",                size: "tall"   },
+  
+  // { src: hugBlack,     alt: "El baile",                size: "tall"   },
 ];
 
 // ─── Estilos ────────────────────────────────────────────────────────────────
