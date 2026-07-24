@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { colors, fonts, gradients, shadows } from "../../styles/theme";
-import venueImage from "../../assets/jiwasa.png";
+import venueImage from "../../assets/frontis-jiwasa.png";
 
 // ─── Íconos ──────────────────────────────────────────────────────────────────
 
@@ -50,7 +50,7 @@ const S = {
     borderRadius: "4px",
     overflow: "hidden" as const,
     boxShadow: "0 4px 18px rgba(28,42,58,0.08)",
-    border: `1px solid ${colors.borderLight}`,
+    border: "none",
   },
   imageWrap: {
     position: "relative" as const,
@@ -65,7 +65,7 @@ const S = {
     fontSize: "0.65rem",
     letterSpacing: "0.32em",
     textTransform: "uppercase" as const,
-    color: colors.accentTeal,
+    color: colors.dustyBlue,
     marginBottom: "0.5rem",
   },
   venueName: {
@@ -97,10 +97,26 @@ const S = {
     color: colors.textMuted,
     fontSize: "0.92rem",
     lineHeight: 1.65,
-    borderLeft: `2px solid ${colors.accentTeal}`,
     paddingLeft: "0.85rem",
     marginBottom: "1.25rem",
     opacity: 0.9,
+    borderLeft: "none",
+  },
+  mapWrap: {
+    position: "relative" as const,
+    width: "100%",
+    height: "220px",
+    borderRadius: "4px",
+    overflow: "hidden" as const,
+    marginBottom: "1.25rem",
+    border: `1px solid ${colors.dustyBlue}22`,
+  },
+  mapFrame: {
+    border: 0,
+    width: "100%",
+    height: "100%",
+    display: "block" as const,
+    filter: "grayscale(8%) contrast(1.02)",
   },
   mapLink: {
     display: "inline-flex" as const,
@@ -110,20 +126,29 @@ const S = {
     fontSize: "0.75rem",
     letterSpacing: "0.18em",
     textTransform: "uppercase" as const,
-    color: colors.accentTeal,
+    color: colors.dustyBlue,
     textDecoration: "none",
-    borderBottom: `1px solid ${colors.accentTeal}`,
+    borderBottom: `1px solid ${colors.dustyBlue}`,
     paddingBottom: "2px",
   },
 } as const;
 
-// ─── Reveal ──────────────────────────────────────────────────────────────────
+// ─── Reveal ──��───────────────────────────────────────────────────────────────
 
 const revealStyle: React.CSSProperties = {
   opacity: 0,
   transform: "translateY(20px)",
   transition: "opacity 0.65s ease, transform 0.65s ease",
 };
+
+// ─── Mapa embebido ───────────────────────────────────────────────────────────
+// Consulta usada para el embed público de Google Maps (no requiere API key).
+// Si más adelante consigues coordenadas exactas (lat,lng), reemplaza el valor
+// de MAP_QUERY por "lat,lng" para mayor precisión.
+const MAP_QUERY = "Jiwasa Centro de Eventos, Achocalla, La Paz, Bolivia";
+const MAP_EMBED_SRC = `https://www.google.com/maps?q=${encodeURIComponent(
+  MAP_QUERY
+)}&output=embed`;
 
 // ─── Componente ──────────────────────────────────────────────────────────────
 
@@ -187,6 +212,17 @@ export function EventDetails() {
             <p style={S.note}>
               Les pedimos llegar 15 minutos antes para comenzar puntualmente este momento tan especial.
             </p>
+
+            <div style={S.mapWrap}>
+              <iframe
+                src={MAP_EMBED_SRC}
+                style={S.mapFrame}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación de Jiwasa en Achocalla"
+              />
+            </div>
 
             <a
               href="https://maps.app.goo.gl/1fCM2CS4UvyX2B4y8?g_st=iw"

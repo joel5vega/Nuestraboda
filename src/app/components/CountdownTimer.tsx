@@ -14,7 +14,7 @@ function getTimeLeft() {
   };
 }
 
-// ─── Opción 3: Minimalista con línea inferior ─────────────────────────────────
+// ─── Opción 3: Minimalista con línea inferior (una sola línea siempre) ────────
 
 function Unit({ value, label, isLast }: { value: number; label: string; isLast: boolean }) {
   const display = String(value).padStart(2, "0");
@@ -24,18 +24,21 @@ function Unit({ value, label, isLast }: { value: number; label: string; isLast: 
       display:       "flex",
       flexDirection: "column",
       alignItems:    "center",
-      gap:           "0.4rem",
-      padding:       "0 clamp(1rem, 3vw, 2.5rem)",
+      gap:           "0.3rem",
+      flex:          "1 1 0",
+      minWidth:      0,
+      padding:       "0 clamp(0.25rem, 2vw, 2.5rem)",
       borderRight:   isLast ? "none" : "1px solid rgba(74,127,165,0.15)",
     }}>
       <span style={{
         fontFamily:    theme.fonts.display,
-        fontSize:      "clamp(2.8rem, 8vw, 5rem)",
+        fontSize:      "clamp(1.5rem, 7vw, 5rem)",
         color:         theme.colors.cream,
         fontWeight:    400,
         lineHeight:    1,
         letterSpacing: "-0.03em",
         transition:    "opacity 0.2s ease",
+        whiteSpace:    "nowrap",
       }}>
         {display}
       </span>
@@ -44,11 +47,12 @@ function Unit({ value, label, isLast }: { value: number; label: string; isLast: 
 
       <span style={{
         fontFamily:    theme.fonts.sans,
-        fontSize:      "0.58rem",
+        fontSize:      "clamp(0.42rem, 1.6vw, 0.58rem)",
         color:         theme.colors.primary,
-        letterSpacing: "0.3em",
+        letterSpacing: "clamp(0.08em, 0.5vw, 0.3em)",
         textTransform: "uppercase",
         marginTop:     "0.2rem",
+        whiteSpace:    "nowrap",
       }}>
         {label}
       </span>
@@ -56,7 +60,7 @@ function Unit({ value, label, isLast }: { value: number; label: string; isLast: 
   );
 }
 
-// ─── Componente principal ─────────────────────────────────────────────────────
+// ─── Componente principal ────────────────────────────────────────────────────���
 
 export function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
@@ -84,8 +88,6 @@ export function CountdownTimer() {
 
       <section style={{ padding: "1rem 1rem 5rem 1rem", textAlign: "center" }}>
 
-      
-
         <h2 style={{
           fontFamily: theme.fonts.display, color: theme.colors.cream,
           fontSize: "clamp(1.5rem, 4vw, 2.2rem)", fontWeight: 400,
@@ -95,12 +97,15 @@ export function CountdownTimer() {
           Faltan para el gran día
         </h2>
 
-        {/* Sin gap — el padding interno de cada Unit hace el espaciado */}
+        {/* nowrap + flex:1 en cada Unit: siempre en una sola línea, sin importar el ancho */}
         <div style={{
           display:        "flex",
           alignItems:     "flex-start",
           justifyContent: "center",
-          flexWrap:       "wrap",
+          flexWrap:       "nowrap",
+          width:          "100%",
+          maxWidth:       "480px",
+          margin:         "0 auto",
           animation:      "fadeInUp 0.6s ease 0.2s both",
         }}>
           {units.map((u, i) => (

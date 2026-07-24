@@ -9,14 +9,16 @@ import jiwasa     from "../../assets/jiwasa.png";
 import  theme  from "../../styles/theme";
 import hug from "../../assets/hug.jpeg";
 import blueandwhite from "../../assets/blueandwhite.jpg";
+import together from "../../assets/together.jpeg";
 
 
 const photos = [
-  { src: hug,    alt: "Los anillos",             size: "normal" },
-  { src: hands,        alt: "Ceremonia al aire libre", size: "tall"   },
+  { src: hug,    alt: "Los anillos",             size: "tall" },
   
+    {src: together,       alt: "Juntos para siempre",      size: "normal" },
+{ src: hands,        alt: "Ceremonia al aire libre", size: "normal"   },
+  { src: blueandwhite,       alt: "Decoración de mesa",      size: "tall" },
 
-  { src: blueandwhite,       alt: "Decoración de mesa",      size: "normal" },
   
   // { src: hugBlack,     alt: "El baile",                size: "tall"   },
 ];

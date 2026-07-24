@@ -20,6 +20,38 @@ const S = {
   fieldLabel:{ fontFamily: fonts.sans, fontSize: "0.72rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: colors.accentBlue, display: "block", marginBottom: "8px" },
   input:     { background: "rgba(74,127,165,0.06)", border: `1px solid rgba(74,127,165,0.25)`, borderRadius: "4px", color: colors.textPrimary, fontFamily: fonts.serif, fontSize: "1rem", padding: "12px 16px", width: "100%", outline: "none", transition: "border-color 0.2s ease, background 0.2s ease", caretColor: colors.accentBlue } as React.CSSProperties,
   btn:       { width: "100%", padding: "1rem", background: `linear-gradient(135deg, ${colors.accentTeal}, #3A6585)`, color: colors.textPrimary, fontFamily: fonts.sans, fontSize: "0.78rem", letterSpacing: "0.3em", textTransform: "uppercase" as const, border: `1px solid rgba(143,175,194,0.2)`, borderRadius: "4px", boxShadow: "0 4px 20px rgba(74,127,165,0.3)", cursor: "pointer", transition: "opacity 0.2s ease, transform 0.15s ease" },
+  giftBox: {
+  marginTop: "0.5rem",
+  padding: "1.25rem",
+  border: `1px solid rgba(143,175,194,0.18)`,
+  borderRadius: "8px",
+  background: "rgba(255,255,255,0.04)",
+  textAlign: "center" as const,
+},
+giftText: {
+  fontFamily: fonts.serif,
+  color: colors.textPrimary,
+  fontSize: "0.98rem",
+  lineHeight: 1.75,
+  maxWidth: "420px",
+  margin: "0 auto 1rem",
+},
+giftQrWrap: {
+  background: "#FFFFFF",
+  padding: "10px",
+  borderRadius: "10px",
+  width: "fit-content",
+  margin: "0 auto 0.85rem",
+  boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
+},
+giftNote: {
+  fontFamily: fonts.sans,
+  fontSize: "0.72rem",
+  letterSpacing: "0.16em",
+  textTransform: "uppercase" as const,
+  color: colors.accentBlue,
+  opacity: 0.9,
+},
 } as const;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -106,8 +138,8 @@ const handleSubmit = async (e: React.FormEvent) => {
 
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: "3rem", animation: "fadeInUp 0.6s ease both" }}>
-            <h2 style={S.heading}>Confirma tu asistencia</h2>
-            <p style={S.deadline}>Por favor confirma antes del <strong style={{ color: colors.accentBlue }}>15 de Julio, 2026</strong></p>
+            <h2 style={S.heading}>El mejor regalo es tu presencia</h2>
+            <p style={S.deadline}>Por favor confirma antes del <strong style={{ color: colors.accentBlue }}>25 de Julio, 2026</strong></p>
           </div>
 
           <div style={{ ...S.card, animation: "fadeInUp 0.6s ease 0.15s both" }}>
@@ -215,7 +247,27 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </div>
 )}
                   </div>
+{/* <div style={S.giftBox}>
+ 
 
+  <p style={S.giftText}>
+  Su presencia será nuestro mejor regalo. <br/>Si desean tener un detalle con nosotros,<br/> pueden hacerlo mediante este código QR.
+  </p>
+
+  <div style={S.giftQrWrap}>
+    <img
+      src="assets/qr-regalo.jpeg"
+      alt="Código QR para regalo"
+      style={{
+        width: "170px",
+        height: "170px",
+        display: "block",
+      }}
+    />
+  </div>
+
+  
+</div> */}
                  
 
                   {/* Botón */}

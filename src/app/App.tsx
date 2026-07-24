@@ -13,7 +13,7 @@ import { Footer }        from "./components/Footer";
 import { MusicPlayer, MusicPlayerHandle  }   from "./components/MusicPlayer";
 import { PetalCanvas }   from "./components/PetalCanvas";
 import { RusticDivider } from "./components/RusticDivider"; 
-
+import { GiftSection } from "./components/GiftSection";
 // ── Wave helper ──────────────────────────────────────────────────────────────
 // fill = color de la SIGUIENTE sección
 const Wave = ({
@@ -33,15 +33,15 @@ const Wave = ({
     <svg
       viewBox="0 0 1000 80"
       preserveAspectRatio="none"
-      style={{
-        position: "absolute",
-        bottom:   0,
-        left:     0,
-        width:    "100%",
-        height:   "80px",
-        display:  "block",
-        zIndex:   2,
-      }}
+    style={{
+  position: "absolute",
+  bottom: "-1px",
+  left: 0,
+  width: "100%",
+  height: "80px",
+  display: "block",
+  zIndex: 2,
+}}
     >
       <path d={paths[variant]} fill={fill} />
     </svg>
@@ -75,9 +75,9 @@ const musicRef = useRef<MusicPlayerHandle>(null);
         <Navbar />
 
         {/* ── Hero ─── imagen → siguiente: bgDark */}
-        <section id="hero" style={{ position: "relative" }}>
+        <section id="hero" style={{ position: "relative" ,overflow: "hidden"}} >
           <HeroSection animate={splashDone} />
-          <Wave fill={colors.bgDark} variant="wave" />
+          <Wave fill={colors.bgDark} variant="wave"  />
         </section>
 
         {/* ── Countdown ─── bgDark → siguiente: bgLight */}
@@ -101,19 +101,28 @@ const musicRef = useRef<MusicPlayerHandle>(null);
         </section>
 
         {/* ── Gallery ─── bgLight → siguiente: bgDark */}
-        <section id="gallery" style={{ position: "relative", background: colors.bgLight }}>
-          <Gallery />
-          <Wave fill={colors.bgDark} variant="wave" />
-        </section>
+<section id="gallery" style={{ position: "relative", background: colors.bgLight }}>
+  <Gallery />
+  <Wave fill={colors.bgDark} variant="wave" />
+</section>
 
-        {/* ── RSVP ─── bgDark → siguiente: Footer bgLight */}
-        <section id="rsvp" style={{ position: "relative", background: colors.bgDark }}>
-          <RSVPForm />
-          <Wave fill={colors.bgLight} variant="curve" />
-        </section>
+{/* ── Gifts ─── bgDark → siguiente: bgLight */}
+{/* <section id="gifts" style={{ position: "relative", background: colors.bgDark }}>
+  
+</section> */}
+
+{/* ── RSVP ─── bgDark → siguiente: Footer bgLight */}
+<section id="rsvp" style={{ position: "relative", background: colors.bgDark }}>
+  <RSVPForm />
+  {/* <GiftSection /> */}
+  {/* <Wave fill={colors.bgDark} variant="curve" /> */}
+</section>
 
         {/* ── Footer ─── bgDark (sin wave, es el final) */}
+        <section id="footer" style={{ position: "relative", background: colors.bgDark ,overflow: "hidden"}}>
+
         <Footer />
+        </section>
         <MusicPlayer ref={musicRef} />
       </div>
     </div>
