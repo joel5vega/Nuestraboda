@@ -2,11 +2,11 @@ import { useState } from "react";
 import { colors, fonts, gradients } from "../../styles/theme";
 
 type FormData = {
-  name:       string;
-  phone:      string;
-  guests:     string;
-  attendance: string;
-  message:    string;
+  name:      string;
+  phone:     string;
+  companion: string; // "no" | "sí"
+  adults:    string;
+  children:  string;
 };
 
 // ─── Estilos ─────────────────────────────────────────────────────────────────
@@ -69,7 +69,7 @@ const focusOut = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTM
 
 export function RSVPForm() {
   const [form, setForm] = useState<FormData>({
-    name: "", phone: "", guests: "1", attendance: "", message: "",
+    name: "", phone: "", companion: "no", adults: "1", children: "0",
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading,   setLoading]   = useState(false);
@@ -78,40 +78,41 @@ export function RSVPForm() {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbwPRR8OShetBXmXNtqgkgFnOveNJv550ib7NhkW_DL42m5uhcVDXWtaC2oJF1dHkbstQw/exec", {
-      method: "POST",
-      redirect: "follow",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-      },
-      body: JSON.stringify({
-        name: form.name,
-        phone: form.phone,
-        attendance: form.attendance,
-        guests: form.attendance === "yes" ? form.guests : "No",
-        message: form.message,
-      }),
-    });
+    try {
+      const res = await fetch("https://script.google.com/macros/s/AKfycbwPRR8OShetBXmXNtqgkgFnOveNJv550ib7NhkW_DL42m5uhcVDXWtaC2oJF1dHkbstQw/exec", {
+        method: "POST",
+        redirect: "follow",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          attendance: "yes",
+          guests:   form.companion, // "sí" | "no" — misma clave/valores que ya reconoce tu Apps Script
+          adults:   form.companion === "sí" ? form.adults   : "0",
+          children: form.companion === "sí" ? form.children : "0",
+        }),
+      });
 
-    const result = await res.json();
+      const result = await res.json();
 
-    if (result.ok) {
-      setSubmitted(true);
-    } else {
-      alert("Error al guardar: " + result.error);
+      if (result.ok) {
+        setSubmitted(true);
+      } else {
+        alert("Error al guardar: " + result.error);
+      }
+    } catch (error) {
+      alert("No se pudo enviar el formulario");
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    alert("No se pudo enviar el formulario");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
+
   return (
     <>
       <style>{`
@@ -174,9 +175,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   ¡Gracias, {form.name}!
                 </h3>
                 <p style={{ fontFamily: fonts.serif, color: colors.accentBlue, fontSize: "1.05rem", lineHeight: 1.7, maxWidth: "380px", margin: "0 auto" }}>
-                  {form.attendance === "yes"
-                    ? "Tu asistencia ha sido confirmada. ¡Nos vemos el 1 de agosto para celebrar juntos!"
-                    : "Lamentamos que no puedas acompañarnos, pero te tendremos en nuestro corazón."}
+                  Tu asistencia ha sido confirmada. ¡Nos vemos el 1 de agosto para celebrar juntos!
                 </p>
 
                 {/* Decoración */}
@@ -217,58 +216,43 @@ const handleSubmit = async (e: React.FormEvent) => {
                     />
                   </div>
 
-                  {/* Asistencia + acompañante — fila */}
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-                    <div>
-                      <label style={S.fieldLabel}>¿Asistirás?</label>
-                      <select
-                        name="attendance" value={form.attendance}
-                        onChange={handleChange} required
-                        style={{ ...S.input, cursor: "pointer" }}
-                        onFocus={focusIn} onBlur={focusOut}
-                      >
-                        <option value=""  style={{ background: colors.bgCard }}>Selecciona</option>
-                        <option value="yes" style={{ background: colors.bgCard }}>¡Sí, ahí estaré! 🎉</option>
-                        <option value="no"  style={{ background: colors.bgCard }}>No podré asistir</option>
-                      </select>
-                    </div>
-{form.attendance === "yes" && (
-                    <div>
-                      <label style={S.fieldLabel}>¿Acompañado?</label>
-                      <select
-                        name="guests" value={form.guests}
-                        onChange={handleChange}
-                        style={{ ...S.input, cursor: "pointer" }}
-                        onFocus={focusIn} onBlur={focusOut}
-                      >
-                        <option value="no"  style={{ background: colors.bgCard }}>Solo/a</option>
-                        <option value="sí"  style={{ background: colors.bgCard }}>Acompañado</option>
-                      </select>
-                    </div>
-)}
+                  {/* ¿Acompañado? */}
+                  <div>
+                    <label style={S.fieldLabel}>¿Vendrás acompañado?</label>
+                    <select
+                      name="companion" value={form.companion}
+                      onChange={handleChange}
+                      style={{ ...S.input, cursor: "pointer" }}
+                      onFocus={focusIn} onBlur={focusOut}
+                    >
+                      <option value="no" style={{ background: colors.bgCard }}>Solo/a</option>
+                      <option value="sí" style={{ background: colors.bgCard }}>Acompañado</option>
+                    </select>
                   </div>
-{/* <div style={S.giftBox}>
- 
 
-  <p style={S.giftText}>
-  Su presencia será nuestro mejor regalo. <br/>Si desean tener un detalle con nosotros,<br/> pueden hacerlo mediante este código QR.
-  </p>
-
-  <div style={S.giftQrWrap}>
-    <img
-      src="assets/qr-regalo.jpeg"
-      alt="Código QR para regalo"
-      style={{
-        width: "170px",
-        height: "170px",
-        display: "block",
-      }}
-    />
-  </div>
-
-  
-</div> */}
-                 
+                  {/* Adultos y niños — solo si viene acompañado */}
+                  {form.companion === "sí" && (
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                      <div>
+                        <label style={S.fieldLabel}>Número de adultos</label>
+                        <input
+                          type="number" name="adults" value={form.adults}
+                          onChange={handleChange} min="1" required
+                          style={S.input}
+                          onFocus={focusIn} onBlur={focusOut}
+                        />
+                      </div>
+                      <div>
+                        <label style={S.fieldLabel}>Número de niños</label>
+                        <input
+                          type="number" name="children" value={form.children}
+                          onChange={handleChange} min="0" required
+                          style={S.input}
+                          onFocus={focusIn} onBlur={focusOut}
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   {/* Botón */}
                   <button type="submit" disabled={loading} className="rsvp-btn" style={S.btn}>

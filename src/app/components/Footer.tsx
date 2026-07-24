@@ -15,11 +15,12 @@ const CrossIcon = () => (
   </svg>
 );
 
+// Corazón de trazo fino — mismo lenguaje visual que CrossIcon (line-art, elegante)
 const HeartIcon = () => (
-  <svg width="13" height="12" viewBox="0 0 13 12" fill="none" aria-hidden="true">
+  <svg width="14" height="13" viewBox="0 0 14 13" fill="none" aria-hidden="true">
     <path
-      d="M6.5 10.5S1 7 1 3.8A2.7 2.7 0 0 1 6.5 3a2.7 2.7 0 0 1 5.5.8C12 7 6.5 10.5 6.5 10.5Z"
-      fill={colors.accentTeal} opacity={0.85}
+      d="M7 12S1.2 8.1 1.2 4.3A3 3 0 0 1 7 3a3 3 0 0 1 5.8 1.3C12.8 8.1 7 12 7 12Z"
+      stroke={colors.accentTeal} strokeWidth="1.1" strokeLinejoin="round" opacity={0.75}
     />
   </svg>
 );
@@ -55,7 +56,8 @@ const S = {
   link:     { fontFamily: "'Mulish', sans-serif",
               fontSize: "clamp(.72rem,.68rem + .2vw,.82rem)", letterSpacing: "0.15em",
               textTransform: "uppercase" as const, color: colors.accentTeal,
-              textDecoration: "none", borderBottom: `1px solid transparent` },
+              textDecoration: "none", borderBottom: `1px solid transparent`,
+              transition: "color 0.3s ease, border-color 0.3s ease" },
 } as const;
 
 const lineL = `linear-gradient(to right, transparent, ${colors.accentTeal})`;
@@ -69,13 +71,11 @@ export function Footer() {
           from { opacity: 0; transform: translateY(18px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        .footer-link:hover { color: ${colors.accentTealDim}; }
+        .footer-link:hover { color: ${colors.accentTealDim}; border-bottom-color: ${colors.accentTealDim}; }
       `}</style>
 
       <footer style={S.footer} role="contentinfo">
         <div style={S.inner}>
-
-        
 
           {/* Nombres */}
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center",
@@ -104,10 +104,13 @@ export function Footer() {
             <span style={S.verseRef}>— Isaías 62:5</span>
           </blockquote>
 
-          {/* Barra inferior */}
-          <div style={{ marginTop: "2.5rem", display: "flex", flexDirection: "column",
-                        alignItems: "center", gap: "0.75rem", ...anim("0.42s") }}>
-            <p style={S.bottom}>Hecho con 💗 por </p>
+          {/* Barra inferior — todo en una sola línea */}
+          <div style={{ marginTop: "2.5rem", display: "flex", alignItems: "center",
+                        justifyContent: "center", flexWrap: "wrap", gap: "0.4rem",
+                        ...anim("0.42s") }}>
+            <span style={S.bottom}>Hecho con</span>
+            <HeartIcon />
+            <span style={S.bottom}>por</span>
             <a
               href="https://joel5vega.github.io"
               target="_blank"
