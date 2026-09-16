@@ -26,37 +26,36 @@ const S = {
     fontStyle: "italic" as const,
   },
   row: {
-    display: "flex",
+    display: "grid",
+    gridTemplateColumns: "38px 64px 1fr",
     alignItems: "center",
-    gap: "1rem",
-    padding: "0.65rem 0",
+    columnGap: "0.9rem",
+    padding: "0.7rem 0",
   },
   iconCircle: {
     width: "38px",
     height: "38px",
     borderRadius: "50%",
-    background: gradients.cardDark,
-    border: "1px solid rgba(74,127,165,0.3)",
+    background: `linear-gradient(135deg, ${colors.accentTeal}, rgba(74,127,165,0.55))`,
+    boxShadow: "0 0 0 4px rgba(74,127,165,0.12), 0 2px 8px rgba(0,0,0,0.25)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: colors.accentTeal,
+    color: colors.cream ?? "#fff",
     flexShrink: 0,
     zIndex: 2,
   },
   time: {
     fontFamily: fonts.sans,
     fontSize: "0.68rem",
-    letterSpacing: "0.18em",
+    letterSpacing: "0.16em",
     color: colors.accentTeal,
     textTransform: "uppercase" as const,
-    flexShrink: 0,
-    minWidth: "70px",
   },
   eventName: {
     fontFamily: fonts.display,
     color: colors.textPrimary,
-    fontSize: "clamp(0.95rem, 2vw, 1.15rem)",
+    fontSize: "clamp(1rem, 2vw, 1.2rem)",
     fontWeight: 400,
     fontStyle: "italic" as const,
     margin: 0,
@@ -74,7 +73,7 @@ export function Schedule() {
         entries.forEach((e) => {
           if (e.isIntersecting) {
             (e.target as HTMLElement).style.opacity = "1";
-            (e.target as HTMLElement).style.transform = "translateY(0)";
+            (e.target as HTMLElement).style.transform = "translateY(0) scale(1)";
             observer.unobserve(e.target);
           }
         }),
@@ -101,12 +100,12 @@ export function Schedule() {
           </div>
         </div>
 
-        {/* Lista vertical simple, una sola columna */}
+        {/* Lista vertical simple, una sola columna, todo alineado por grid */}
         <div style={{ position: "relative" }}>
           <div style={{
-            position: "absolute", left: "19px", top: 0, bottom: 0, width: "1px",
-            background: `linear-gradient(to bottom, transparent, ${colors.accentTeal} 6%, ${colors.accentTeal} 94%, transparent)`,
-            opacity: 0.3,
+            position: "absolute", left: "19px", top: "6px", bottom: "6px", width: "1.5px",
+            background: colors.accentTeal,
+            opacity: 0.45,
           }} />
 
           {scheduleItems.map((item, i) => (
@@ -116,17 +115,15 @@ export function Schedule() {
               style={{
                 ...S.row,
                 opacity: 0,
-                transform: "translateY(14px)",
-                transition: `opacity 0.45s ease ${i * 0.06}s, transform 0.45s ease ${i * 0.06}s`,
+                transform: "translateY(14px) scale(0.96)",
+                transition: `opacity 0.5s cubic-bezier(0.34,1.2,0.64,1) ${i * 0.07}s, transform 0.5s cubic-bezier(0.34,1.2,0.64,1) ${i * 0.07}s`,
               }}
             >
               <div style={S.iconCircle}>
-                <item.Icon size={16} color={colors.accentTeal} />
+                <item.Icon size={16} />
               </div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: "0.6rem", flexWrap: "wrap" }}>
-                <span style={S.time}>{item.time}</span>
-                <h3 style={S.eventName}>{item.event}</h3>
-              </div>
+              <span style={S.time}>{item.time}</span>
+              <h3 style={S.eventName}>{item.event}</h3>
             </div>
           ))}
         </div>

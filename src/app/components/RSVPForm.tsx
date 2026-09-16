@@ -140,7 +140,7 @@ export function RSVPForm() {
           {/* Header */}
           <div style={{ textAlign: "center", marginBottom: "3rem", animation: "fadeInUp 0.6s ease both" }}>
             <h2 style={S.heading}>El mejor regalo es tu presencia</h2>
-            <p style={S.deadline}>Por favor confirma antes del <strong style={{ color: colors.accentBlue }}>25 de Julio, 2026</strong></p>
+            <p style={S.deadline}>Por favor confirma antes del <strong style={{ color: colors.accentBlue }}>30 de Julio, 2026</strong></p>
           </div>
 
           <div style={{ ...S.card, animation: "fadeInUp 0.6s ease 0.15s both" }}>

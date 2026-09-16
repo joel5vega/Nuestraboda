@@ -14,7 +14,18 @@ function getTimeLeft() {
   };
 }
 
-// ─── Opción 3: Minimalista con línea inferior (una sola línea siempre) ────────
+function isTodayWeddingDay(): boolean {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const day = now.getDate();
+
+  const weddingYear = WEDDING_DATE.getFullYear();
+  const weddingMonth = WEDDING_DATE.getMonth();
+  const weddingDay = WEDDING_DATE.getDate();
+
+  return year === weddingYear && month === weddingMonth && day === weddingDay;
+}
 
 function Unit({ value, label, isLast }: { value: number; label: string; isLast: boolean }) {
   const display = String(value).padStart(2, "0");
@@ -60,13 +71,15 @@ function Unit({ value, label, isLast }: { value: number; label: string; isLast: 
   );
 }
 
-// ─── Componente principal ────────────────────────────────────────────────────���
-
 export function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
+  const [isToday, setIsToday] = useState(isTodayWeddingDay());
 
   useEffect(() => {
-    const t = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
+    const t = setInterval(() => {
+      setTimeLeft(getTimeLeft());
+      setIsToday(isTodayWeddingDay());
+    }, 1000);
     return () => clearInterval(t);
   }, []);
 
@@ -94,29 +107,30 @@ export function CountdownTimer() {
           fontStyle: "italic", marginBottom: "3rem",
           animation: "fadeInUp 0.6s ease 0.1s both",
         }}>
-          Faltan para el gran día
+          {isToday ? "¡Es hoy!" : "Faltan para el gran día"}
         </h2>
 
-        {/* nowrap + flex:1 en cada Unit: siempre en una sola línea, sin importar el ancho */}
-        <div style={{
-          display:        "flex",
-          alignItems:     "flex-start",
-          justifyContent: "center",
-          flexWrap:       "nowrap",
-          width:          "100%",
-          maxWidth:       "480px",
-          margin:         "0 auto",
-          animation:      "fadeInUp 0.6s ease 0.2s both",
-        }}>
-          {units.map((u, i) => (
-            <Unit
-              key={u.label}
-              value={u.value}
-              label={u.label}
-              isLast={i === units.length - 1}
-            />
-          ))}
-        </div>
+        {!isToday && (
+          <div style={{
+            display:        "flex",
+            alignItems:     "flex-start",
+            justifyContent: "center",
+            flexWrap:       "nowrap",
+            width:          "100%",
+            maxWidth:       "480px",
+            margin:         "0 auto",
+            animation:      "fadeInUp 0.6s ease 0.2s both",
+          }}>
+            {units.map((u, i) => (
+              <Unit
+                key={u.label}
+                value={u.value}
+                label={u.label}
+                isLast={i === units.length - 1}
+              />
+            ))}
+          </div>
+        )}
 
         <p style={{
           fontFamily: theme.fonts.serif, fontStyle: "italic",

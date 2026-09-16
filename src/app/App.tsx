@@ -1,4 +1,4 @@
-import { useState ,useRef } from "react";
+import { useState, useRef } from "react";
 import { colors }        from "../styles/theme";
 import { SplashScreen }  from "./components/SplashScreen";
 import { Navbar }        from "./components/Navbar";
@@ -14,6 +14,13 @@ import { MusicPlayer, MusicPlayerHandle  }   from "./components/MusicPlayer";
 import { PetalCanvas }   from "./components/PetalCanvas";
 import { RusticDivider } from "./components/RusticDivider"; 
 import { GiftSection } from "./components/GiftSection";
+
+const WEDDING_DATE = new Date("2026-08-01T12:00:00");
+
+function hasWeddingPassed(): boolean {
+  return Date.now() >= WEDDING_DATE.getTime();
+}
+
 // ── Wave helper ──────────────────────────────────────────────────────────────
 // fill = color de la SIGUIENTE sección
 const Wave = ({
@@ -48,19 +55,12 @@ const Wave = ({
   );
 };
 
-// ── Colores de cada sección (del theme real) ─────────────────────────────────
-//  Hero        → imagen propia (no define bg)
-//  Countdown   → bgDark   "#1C2A3A"   (gradients.sectionDark)
-//  OurStory    → bgCard   "#2C3D4F"
-//  EventDetails→ bgLight  "#F4EDE4"
-//  Schedule    → bgDark   "#1C2A3A"
-//  Gallery     → bgLight  "#F4EDE4"
-//  RSVPForm    → bgDark   "#1C2A3A"
-//  Footer      → bgDark   "#1C2A3A"
-
 export default function App() {
   const [splashDone, setSplashDone] = useState(false);
-const musicRef = useRef<MusicPlayerHandle>(null);
+  const musicRef = useRef<MusicPlayerHandle>(null);
+  
+  const weddingPassed = hasWeddingPassed();
+
   return (
     <div style={{ fontFamily: "'Lato', sans-serif" }}>
       
@@ -86,8 +86,6 @@ const musicRef = useRef<MusicPlayerHandle>(null);
           <Wave fill={colors.bgLight} variant="curve" />
         </section>
 
-  
-
         {/* ── Event ─── bgLight → siguiente: bgDark */}
         <section id="event" style={{ position: "relative", background: colors.bgLight }}>
           <EventDetails />
@@ -99,29 +97,27 @@ const musicRef = useRef<MusicPlayerHandle>(null);
           <Schedule />
           <Wave fill={colors.bgLight} variant="curve" />
         </section>
+                {/* ── Gallery ─── bgLight → siguiente: bgDark */}
+{!weddingPassed && (
 
-        {/* ── Gallery ─── bgLight → siguiente: bgDark */}
-<section id="gallery" style={{ position: "relative", background: colors.bgLight }}>
-  <Gallery />
-  <Wave fill={colors.bgDark} variant="wave" />
-</section>
+        <section id="gallery" style={{ position: "relative", background: colors.bgLight }}>
+          <Gallery />
+          <Wave fill={colors.bgDark} variant="wave" />
+        </section>
+)}
 
-{/* ── Gifts ─── bgDark → siguiente: bgLight */}
-{/* <section id="gifts" style={{ position: "relative", background: colors.bgDark }}>
-  
-</section> */}
-
-{/* ── RSVP ─── bgDark → siguiente: Footer bgLight */}
-<section id="rsvp" style={{ position: "relative", background: colors.bgDark }}>
-  <RSVPForm />
-  {/* <GiftSection /> */}
-  {/* <Wave fill={colors.bgDark} variant="curve" /> */}
-</section>
+        {/* ── RSVP ─── Se oculta después de la boda */}
+        {!weddingPassed && (
+          <section id="rsvp" style={{ position: "relative", background: colors.bgDark }}>
+            <RSVPForm />
+            {/* <GiftSection /> */}
+            {/* <Wave fill={colors.bgDark} variant="curve" /> */}
+          </section>
+        )}
 
         {/* ── Footer ─── bgDark (sin wave, es el final) */}
         <section id="footer" style={{ position: "relative", background: colors.bgDark ,overflow: "hidden"}}>
-
-        <Footer />
+          <Footer />
         </section>
         <MusicPlayer ref={musicRef} />
       </div>
